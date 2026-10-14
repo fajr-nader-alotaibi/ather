@@ -1,0 +1,85 @@
+:root {
+  color-scheme: dark;
+  --ink: #132b38;
+  --deep: #172f38;
+  --glass: rgba(23, 47, 56, .84);
+  --mint: #9bd7c2;
+  --gold: #f3c875;
+  --cream: #fff3dc;
+  --berry: #c77976;
+  --border: rgba(165, 209, 174, .72);
+}
+
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #101e2a; }
+body { display: grid; place-items: center; font-family: "Tahoma", "Arial", system-ui, sans-serif; color: var(--cream); }
+button { font: inherit; color: inherit; touch-action: none; -webkit-tap-highlight-color: transparent; }
+.game-shell { position: relative; width: min(100vw, 177.7778vh); height: min(100vh, 56.25vw); aspect-ratio: 16 / 9; overflow: hidden; isolation: isolate; background: #263f52; box-shadow: 0 28px 90px #050e17aa; }
+#world { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.hud { position: absolute; inset: 0 0 auto; height: 145px; pointer-events: none; direction: ltr; }
+.story-card, .trail-card, .glass-button { border: 1px solid var(--border); background: linear-gradient(145deg, rgba(23,47,56,.91), rgba(25,56,61,.78)); box-shadow: 0 10px 25px rgba(9, 22, 29, .21), inset 0 1px rgba(255,255,255,.08); backdrop-filter: blur(8px); }
+.story-card { position: absolute; top: 20px; left: 22px; width: min(440px, 39vw); min-height: 116px; padding: 13px 19px 12px; border-radius: 22px 22px 22px 8px; direction: rtl; text-align: right; }
+.brand-row { display: flex; align-items: center; gap: 11px; }
+.sigil { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid #cfdb9a; color: var(--gold); background: #34574f; border-radius: 50% 50% 46% 54%; font-size: 21px; box-shadow: 0 0 18px #f3c87538; }
+h1 { margin: 0; color: var(--gold); font-size: 20px; letter-spacing: .08em; line-height: 1.1; }
+h1 span { color: var(--cream); letter-spacing: 0; font-family: "Tahoma", "Arial", serif; font-size: 23px; }
+.chapter { margin: 3px 0 0; color: var(--mint); font: 14px "Tahoma", "Arial", serif; }
+.objective { margin: 9px 0 0; color: var(--cream); font: 16px/1.35 "Tahoma", "Arial", serif; }
+.trail-card { position: absolute; top: 22px; right: 183px; width: 160px; height: 88px; padding: 10px 12px 9px; border-radius: 17px 8px 17px 17px; text-align: center; }
+.trail-label { display: block; color: var(--mint); font: 14px "Tahoma", "Arial", serif; }
+.seed-count { display: block; margin-top: -1px; color: var(--gold); font-size: 25px; line-height: 1.08; font-variant-numeric: tabular-nums; }
+.seed-count i { color: #d6c8a9; font-style: normal; font-size: 14px; }
+.root-thread { display: flex; justify-content: center; gap: 8px; margin-top: 7px; }
+.root-thread b { width: 20px; height: 4px; border-radius: 9px; background: #81947e; transform: rotate(-12deg); }
+.root-thread b:nth-child(2) { width: 30px; background: #e4bb71; }
+.root-thread b:nth-child(3) { background: #81947e; transform: rotate(12deg); }
+.root-thread.awake b { background: #c4ed9d; box-shadow: 0 0 9px #b6f2bc; }
+.top-actions { position: absolute; top: 28px; right: 21px; display: flex; gap: 9px; pointer-events: auto; }
+.glass-button { height: 54px; border-radius: 17px; cursor: pointer; transition: transform .16s ease, background .16s ease; }
+.glass-button:hover { transform: translateY(-2px); background: #355b58; }
+.glass-button:focus-visible, .modal button:focus-visible, .touch-controls button:focus-visible { outline: 3px solid #f6d887; outline-offset: 3px; }
+.language { min-width: 105px; padding: 0 12px; font-size: 13px; }
+.pause { width: 58px; color: var(--gold); font-size: 23px; }
+.hint { position: absolute; left: 50%; bottom: 20px; transform: translateX(-50%); max-width: 75%; padding: 9px 22px 10px; border: 1px solid #adcba277; border-radius: 17px 7px 17px 7px; background: rgba(18, 41, 50, .82); box-shadow: inset 0 1px #fff2d31a; text-align: center; color: #fff1d9; font: 15px "Tahoma", "Arial", serif; white-space: nowrap; pointer-events: none; }
+.touch-controls { display: none; position: absolute; inset: auto 22px 20px; direction: ltr; align-items: end; justify-content: space-between; pointer-events: none; }
+.touch-move, .touch-use { display: flex; align-items: end; gap: 10px; pointer-events: auto; }
+.touch-controls button { min-width: 70px; height: 68px; border: 1px solid #b7d5a4c4; border-radius: 25px 25px 25px 9px; background: #193d45c9; backdrop-filter: blur(7px); box-shadow: inset 0 1px #fff3d72e, 0 5px 14px #0a202a4d; color: var(--cream); font-size: 19px; font-weight: 700; }
+.touch-move button { width: 72px; color: var(--mint); font: 38px/1 "Tahoma", "Arial", serif; }
+.touch-use button[data-action="jump"] { width: 106px; height: 82px; color: var(--gold); }
+.touch-use button[data-action="interact"] { width: 82px; height: 66px; font: 17px "Tahoma", "Arial", serif; }
+.veil { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(8, 21, 29, .67); backdrop-filter: blur(5px); }
+.veil[hidden] { display: none; }
+.modal { width: min(490px, 86%); padding: 30px 36px 32px; border: 2px solid #9bc99d; border-radius: 32px 14px 32px 14px; background: radial-gradient(ellipse at 50% 0%, #395f59, #1b3841 58%); text-align: center; box-shadow: 0 28px 70px #08131eb0, inset 0 1px #fff4d82b; }
+.modal-spark { display: grid; place-items: center; width: 56px; height: 56px; margin: 0 auto 7px; border: 1px solid #e6c17b; border-radius: 50% 50% 43% 57%; color: var(--gold); background: #876d4a55; font-size: 28px; }
+.modal h2 { margin: 5px 0 8px; color: var(--gold); font: 700 30px "Tahoma", "Arial", serif; }
+.modal p { margin: 0 auto 22px; max-width: 390px; color: var(--cream); font: 19px/1.6 "Tahoma", "Arial", serif; }
+.modal-actions { display: grid; gap: 10px; }
+.modal button { min-height: 54px; border-radius: 16px; cursor: pointer; font: 18px "Tahoma", "Arial", serif; }
+.primary { border: 1px solid #c2d592; background: linear-gradient(100deg, #517a61, #668d65); }
+.secondary { border: 1px solid #a8bbb0; background: #294a50; }
+html[lang="en"] body { font-family: "Segoe UI", Arial, sans-serif; }
+html[lang="en"] .story-card { direction: ltr; text-align: left; border-radius: 22px 22px 8px 22px; }
+html[lang="en"] .chapter, html[lang="en"] .objective, html[lang="en"] .trail-label, html[lang="en"] .hint, html[lang="en"] .modal p, html[lang="en"] .modal h2 { font-family: "Segoe UI", Arial, sans-serif; }
+html[lang="en"] .trail-card { border-radius: 8px 17px 17px 17px; }
+@media (pointer: coarse), (max-width: 760px) {
+  .touch-controls { display: flex; }
+  .hint { bottom: 112px; max-width: 85%; padding-inline: 11px; font-size: 13px; white-space: normal; }
+  .story-card { top: 10px; left: 10px; width: min(360px, 50vw); min-height: 83px; padding: 9px 11px; border-radius: 17px 17px 17px 7px; }
+  .brand-row { gap: 7px; }
+  .sigil { width: 27px; height: 27px; font-size: 16px; }
+  h1 { font-size: 15px; }
+  h1 span { font-size: 18px; }
+  .chapter { font-size: 11px; }
+  .objective { margin-top: 5px; font-size: 12px; }
+  .trail-card { top: 10px; right: 115px; width: 106px; height: 73px; padding: 6px; }
+  .trail-label { font-size: 11px; }
+  .seed-count { font-size: 19px; }
+  .root-thread { margin-top: 5px; gap: 4px; }
+  .root-thread b { width: 13px; }
+  .root-thread b:nth-child(2) { width: 22px; }
+  .top-actions { top: 10px; right: 9px; gap: 6px; }
+  .glass-button { height: 42px; border-radius: 13px; }
+  .language { min-width: 76px; padding: 0 6px; font-size: 10px; }
+  .pause { width: 42px; font-size: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; } }

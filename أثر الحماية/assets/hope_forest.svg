@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3600" height="720" viewBox="0 0 3600 720">
+<defs>
+ <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#132b3c"/><stop offset=".52" stop-color="#495e85"/><stop offset="1" stop-color="#d18a8e"/></linearGradient>
+ <linearGradient id="mist" x2="0" y2="1"><stop stop-color="#c7b7e5" stop-opacity=".22"/><stop offset="1" stop-color="#f3c6b1" stop-opacity=".03"/></linearGradient>
+ <linearGradient id="tree" x2="1" y2="0"><stop stop-color="#213e40"/><stop offset=".45" stop-color="#31574f"/><stop offset="1" stop-color="#1e383c"/></linearGradient>
+ <linearGradient id="leaf" x2="0" y2="1"><stop stop-color="#4d7864"/><stop offset="1" stop-color="#254c4c"/></linearGradient>
+ <linearGradient id="mush" x2="0" y2="1"><stop stop-color="#e5a179"/><stop offset="1" stop-color="#a45f69"/></linearGradient>
+ <radialGradient id="moon"><stop stop-color="#f7ddae" stop-opacity=".92"/><stop offset="1" stop-color="#f2cbcf" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="3600" height="720" fill="url(#sky)"/>
+<circle cx="1700" cy="230" r="290" fill="url(#moon)"/><circle cx="1700" cy="230" r="102" fill="#f6d8bd" opacity=".58"/>
+<!-- distant ridges -->
+<path d="M0 480 210 391 385 451 590 324 815 456 1010 368 1220 465 1430 350 1650 445 1850 338 2080 452 2280 360 2490 468 2700 345 2925 457 3140 355 3370 450 3600 360V720H0Z" fill="#334a63" opacity=".65"/>
+<path d="M0 526q185-98 360-8t340-21q200-81 398 28t393-8q215-114 427 6t389-11q187-99 366 14t386-8q180-74 341 8V720H0Z" fill="#344d58" opacity=".8"/>
+<!-- fog ribbons -->
+<path d="M0 418q270-70 530 0t510-5q270-55 520 2t522-5q270-62 542 7t510-8q260-52 466 13v165H0Z" fill="url(#mist)"/>
+<!-- forest trunks, rounded canopy shapes -->
+<g opacity=".94">
+ <path d="M70 616q90-130 104-356Q177 117 238 88q34 50 14 170-8 207 56 358Z" fill="url(#tree)"/><path d="M194 301q-106-47-157-142M219 235q97-60 130-148" fill="none" stroke="#284747" stroke-width="28" stroke-linecap="round"/>
+ <path d="M475 635q73-160 90-391-13-92 37-127 45 43 39 146 1 200 75 372Z" fill="#29464a"/><path d="M575 340q-87-36-130-109M599 275q87-61 109-131" fill="none" stroke="#3a6257" stroke-width="22" stroke-linecap="round"/>
+ <path d="M1050 630q64-179 57-412 1-97 56-132 49 59 30 163 4 206 75 381Z" fill="#253f47"/><path d="M1123 288q-105-65-133-161M1164 242q103-59 128-128" fill="none" stroke="#42675a" stroke-width="24" stroke-linecap="round"/>
+ <path d="M1525 650q86-193 79-436-5-109 61-158 60 50 41 189 8 201 77 405Z" fill="#29474b"/><path d="M1632 322q-114-63-147-166M1681 251q112-49 148-136" fill="none" stroke="#436757" stroke-width="28" stroke-linecap="round"/>
+ <path d="M2124 642q68-161 58-384 3-99 56-132 49 49 34 171 2 208 69 345Z" fill="#213d44"/><path d="M2195 316q-91-39-128-122M2231 271q92-58 116-134" fill="none" stroke="#3d6558" stroke-width="22" stroke-linecap="round"/>
+ <path d="M2645 655q86-200 79-430-8-102 58-149 52 55 36 178 7 212 78 401Z" fill="#29464a"/><path d="M2749 322q-115-53-154-156M2792 258q107-61 141-141" fill="none" stroke="#436757" stroke-width="26" stroke-linecap="round"/>
+ <path d="M3170 652q78-175 65-409 4-105 63-141 51 54 35 174 5 207 70 376Z" fill="#223d43"/><path d="M3254 314q-95-40-139-131M3290 267q95-58 131-137" fill="none" stroke="#416555" stroke-width="23" stroke-linecap="round"/>
+</g>
+<!-- big, soft canopy islands -->
+<g fill="url(#leaf)">
+ <path d="M0 210q75-110 188-55 65-116 179-36 89-111 202-21 106-120 230-21 80-94 178-18 63-80 157-8v170H0Z"/>
+ <path d="M720 170q68-105 173-32 67-128 187-37 103-106 210-8 72-100 191-19 91-102 188-7v178H720Z"/>
+ <path d="M1760 176q83-109 186-30 76-116 190-28 79-112 193-19 72-98 188-8 95-103 184-2v178H1760Z"/>
+ <path d="M2780 164q73-101 175-34 67-117 179-31 91-108 199-14 79-100 194-12 34-44 73-34v162H2780Z"/>
+</g>
+<g fill="#668873" opacity=".36"><ellipse cx="309" cy="176" rx="160" ry="51"/><ellipse cx="991" cy="131" rx="180" ry="47"/><ellipse cx="1960" cy="129" rx="190" ry="48"/><ellipse cx="3001" cy="117" rx="170" ry="47"/></g>
+<!-- hanging vines -->
+<g fill="none" stroke="#416a5c" stroke-width="7" stroke-linecap="round"><path d="M282 186q-21 82 8 138t-4 101"/><path d="M890 160q16 64-8 101t6 86"/><path d="M1847 168q-20 73 5 123t-8 88"/><path d="M2954 151q15 79-9 120t8 89"/></g>
+<!-- far mushrooms -->
+<g opacity=".65"><path d="M706 563v-83q31-30 59 0v83" fill="#c59a91"/><path d="M660 490q7-83 75-87 68 3 75 87-81 22-150 0Z" fill="#b46d76"/><path d="M1412 566v-74q27-28 52 0v74" fill="#c69a93"/><path d="M1368 500q5-69 71-76 65 4 69 76-72 19-140 0Z" fill="#b77b83"/><path d="M2418 574v-90q31-28 58 0v90" fill="#c7a394"/><path d="M2373 490q7-79 75-84 70 5 76 84-79 21-151 0Z" fill="#c27a7c"/></g>
+<!-- firefly constellations -->
+<g fill="#f8d898"><circle cx="425" cy="358" r="4"/><circle cx="946" cy="338" r="3"/><circle cx="1273" cy="405" r="4"/><circle cx="1923" cy="363" r="3"/><circle cx="2318" cy="402" r="4"/><circle cx="3004" cy="353" r="3"/><circle cx="3380" cy="413" r="4"/></g>
+<g fill="#d8c8ef" opacity=".9"><circle cx="520" cy="320" r="2.5"/><circle cx="1100" cy="390" r="2.5"/><circle cx="1780" cy="338" r="2.5"/><circle cx="2560" cy="342" r="2.5"/><circle cx="3190" cy="395" r="2.5"/></g>
+<!-- blue bioluminescent plants along the forest floor -->
+<g stroke="#508e94" stroke-width="5" fill="none" stroke-linecap="round"><path d="M290 650v-38m0 19q-23-20-28-1m28-7q18-23 28-9"/><path d="M895 661v-42m0 24q-20-21-27-4m27-8q18-20 29-6"/><path d="M1740 656v-45m0 23q-24-22-32-3m32-8q20-23 31-8"/><path d="M2510 660v-40m0 22q-21-22-30-4m30-7q20-20 30-7"/><path d="M3310 650v-46m0 23q-20-21-29-4m29-8q18-22 29-7"/></g>
+<g fill="#8ed5ce"><circle cx="290" cy="608" r="8"/><circle cx="895" cy="616" r="8"/><circle cx="1740" cy="610" r="9"/><circle cx="2510" cy="618" r="8"/><circle cx="3310" cy="602" r="8"/></g>
+<path d="M0 678q190-18 390 2t410-3q210-24 440 5t434-7q227-20 425 8t449-5q180-19 378 4t474-6v44H0Z" fill="#273f43" opacity=".92"/>
+</svg>
