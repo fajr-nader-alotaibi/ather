@@ -16,6 +16,9 @@ const STRINGS := {
 	"restart": {"ar": "إعادة من البداية", "en": "Start this trail again"},
 	"win_title": {"ar": "عاد الأثر إلى الغابة!", "en": "The forest remembers"},
 	"win_body": {"ar": "عادت الجذور إلى الحياة، وصار للطريق أثر أخضر جديد.", "en": "You restored the root bridge and brought the first colors back to Hope Forest."},
+	"team": {"ar": "الفريق", "en": "TEAM"},
+	"solo": {"ar": "رحلة فردية", "en": "SOLO JOURNEY"},
+	"main_menu": {"ar": "العودة إلى القائمة", "en": "Back to title"},
 	"play_again": {"ar": "العب من جديد", "en": "Walk the trail again"},
 	"need_seeds": {"ar": "اجمع كل البذور أولًا.", "en": "Gather all three moonseeds first."},
 	"bridge_first": {"ar": "أعد الحياة إلى الجسر أولًا.", "en": "Restore the root bridge first."},
@@ -24,7 +27,7 @@ const STRINGS := {
 	"prompt_need": {"ar": "هذه البذرة تحتاج إلى ٣ بذور قمرية", "en": "This sprout needs all 3 moonseeds"},
 	"prompt_gate": {"ar": "اضغط E لعبور البوابة", "en": "Press E to pass the lantern gate"},
 	"prompt_gate_wait": {"ar": "البوابة تنتظر عودة الجسر", "en": "The gate waits for the root bridge"},
-	"controls": {"ar": "A / D أو الأسهم للحركة  ·  Space للقفز  ·  E للتفاعل", "en": "A / D or arrows to move  ·  Space to leap  ·  E to interact"}
+	"controls": {"ar": "A / D أو الأسهم للحركة  ·  Space للقفز ثم اضغط مرة ثانية للدوران  ·  E للتفاعل", "en": "A / D or arrows to move  ·  Space to jump, tap again to spin-jump  ·  E to interact"}
 }
 
 

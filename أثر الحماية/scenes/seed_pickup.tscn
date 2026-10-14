@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/seed_pickup.gd" id="1_seed"]
 [ext_resource type="Texture2D" path="res://assets/seed.svg" id="2_art"]
+[ext_resource type="Texture2D" path="res://assets/glow.svg" id="3_glow"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_seed"]
 radius = 25.0
@@ -17,3 +18,9 @@ texture = ExtResource("2_art")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_seed")
+
+[node name="SeedGlow" type="PointLight2D" parent="."]
+texture = ExtResource("3_glow")
+color = Color(0.53, 0.92, 0.68, 1)
+energy = 0.72
+texture_scale = 0.65

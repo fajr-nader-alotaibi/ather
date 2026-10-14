@@ -5,6 +5,7 @@ const TextCatalog = preload("res://scripts/localization.gd")
 
 signal pause_changed(is_paused: bool)
 signal restart_requested
+signal main_menu_requested
 
 var language := "ar"
 var _seeds := 0
@@ -20,6 +21,7 @@ var _pause_layer: ColorRect
 var _win_layer: ColorRect
 var _chapter_label: Label
 var _seed_title: Label
+var _party_label: Label
 var _language_button: Button
 
 const NIGHT := Color("172f38")
@@ -32,9 +34,7 @@ const CREAM := Color("fff3dc")
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	var config := ConfigFile.new()
-	if config.load("user://athar_settings.cfg") == OK:
-		language = str(config.get_value("settings", "language", "ar"))
+	language = GameSession.language
 	_build_panels()
 	_build_pause_layer()
 	_build_touch_controls()
@@ -74,6 +74,11 @@ func _build_panels() -> void:
 	_seed_counter = _label("", 26, GOLD)
 	_seed_counter.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	seed_box.add_child(_seed_counter)
+	var party_panel := _panel(Vector2(510, 24), Vector2(260, 70))
+	_party_label = _label("", 15, MINT)
+	_party_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_party_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	party_panel.add_child(_party_label)
 	_language_button = _button(_text("language_button"), Vector2(1090, 28), Vector2(92, 58), false)
 	_language_button.add_theme_font_size_override("font_size", 15)
 	_language_button.pressed.connect(_toggle_language)
@@ -143,7 +148,7 @@ func _button(value: String, position: Vector2, size: Vector2, round := false) ->
 func _build_pause_layer() -> void:
 	_pause_layer = _overlay()
 	_pause_layer.visible = false
-	var panel := _center_panel(_pause_layer, Vector2(470, 300))
+	var panel := _center_panel(_pause_layer, Vector2(470, 360))
 	var stack := VBoxContainer.new()
 	stack.add_theme_constant_override("separation", 16)
 	panel.add_child(stack)
@@ -163,9 +168,14 @@ func _build_pause_layer() -> void:
 	restart.pressed.connect(func() -> void:
 		restart_requested.emit()
 	)
+	var pause_menu := _button_inside("", stack, 48)
+	pause_menu.name = "PauseMenu"
+	pause_menu.pressed.connect(func() -> void:
+		main_menu_requested.emit()
+	)
 	_win_layer = _overlay()
 	_win_layer.visible = false
-	var win_panel := _center_panel(_win_layer, Vector2(500, 300))
+	var win_panel := _center_panel(_win_layer, Vector2(500, 350))
 	var win_stack := VBoxContainer.new()
 	win_stack.add_theme_constant_override("separation", 17)
 	win_panel.add_child(win_stack)
@@ -182,6 +192,11 @@ func _build_pause_layer() -> void:
 	again.name = "PlayAgain"
 	again.pressed.connect(func() -> void:
 		restart_requested.emit()
+	)
+	var win_menu := _button_inside("", win_stack, 48)
+	win_menu.name = "WinMenu"
+	win_menu.pressed.connect(func() -> void:
+		main_menu_requested.emit()
 	)
 	refresh()
 
@@ -284,10 +299,9 @@ func _show_win() -> void:
 
 
 func _toggle_language() -> void:
-	language = "en" if language == "ar" else "ar"
-	var config := ConfigFile.new()
-	config.set_value("settings", "language", language)
-	config.save("user://athar_settings.cfg")
+	GameSession.language = "en" if language == "ar" else "ar"
+	language = GameSession.language
+	GameSession.save_profile()
 	refresh()
 
 
@@ -303,6 +317,7 @@ func refresh() -> void:
 	_seed_title.text = _text("seeds")
 	_language_button.text = _text("language_button")
 	_seed_counter.text = "%d / 3   ✦" % _seeds
+	_party_label.text = _text("solo") if not GameSession.is_networked else "%s  ·  %d/4" % [_text("team"), GameSession.active_peer_ids().size()]
 	_hint_label.text = _hint
 	var pause_heading := _pause_layer.find_child("PauseHeading", true, false) as Label
 	var pause_body := _pause_layer.find_child("PauseBody", true, false) as Label
@@ -313,6 +328,9 @@ func refresh() -> void:
 		pause_body.text = _text("pause_body")
 		resume_button.text = _text("resume")
 		restart_button.text = _text("restart")
+		var pause_menu := _pause_layer.find_child("PauseMenu", true, false) as Button
+		if is_instance_valid(pause_menu):
+			pause_menu.text = _text("main_menu")
 	var win_title := _win_layer.find_child("WinTitle", true, false) as Label
 	var win_body := _win_layer.find_child("WinBody", true, false) as Label
 	if is_instance_valid(win_title):
@@ -321,3 +339,6 @@ func refresh() -> void:
 		var again := _win_layer.find_child("PlayAgain", true, false) as Button
 		if is_instance_valid(again):
 			again.text = _text("play_again")
+			var win_menu := _win_layer.find_child("WinMenu", true, false) as Button
+			if is_instance_valid(win_menu):
+				win_menu.text = _text("main_menu")

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="224" viewBox="0 0 192 224">
+<defs>
+ <linearGradient id="cloak" x2="0" y2="1"><stop stop-color="#91c8ef"/><stop offset="1" stop-color="#4b84bb"/></linearGradient>
+ <linearGradient id="hood" x2="0" y2="1"><stop stop-color="#69a987"/><stop offset="1" stop-color="#315f5b"/></linearGradient>
+ <linearGradient id="scarf" x2="0" y2="1"><stop stop-color="#f17d69"/><stop offset="1" stop-color="#bc4d57"/></linearGradient>
+</defs>
+<!-- Original small forest keeper: round hood, seed satchel, wind-caught scarf. -->
+<ellipse cx="96" cy="211" rx="50" ry="9" fill="#183331" opacity=".22"/>
+<!-- scarf tail -->
+<path d="M117 91 C150 87 165 101 179 119 C163 116 151 119 139 132 C137 116 127 111 112 113Z" fill="url(#scarf)" stroke="#713f45" stroke-width="5" stroke-linejoin="round"/>
+<path d="M143 103q15 1 24 9" fill="none" stroke="#f9b08a" stroke-width="3" opacity=".8"/>
+<!-- backpack and strap -->
+<path d="M117 121q32-8 35 18l-3 43q-5 14-24 8l-15-44Z" fill="#8b5639" stroke="#503a33" stroke-width="6"/>
+<path d="M130 135q12 0 14 10l-2 16q-11 6-19 0l-1-15q1-8 8-11Z" fill="#c47d4c" stroke="#754632" stroke-width="3"/>
+<path d="M127 153q8 4 15 0" fill="none" stroke="#f2c677" stroke-width="3"/>
+<!-- body -->
+<path d="M63 118q-9 10-12 31l-8 45q-1 13 12 13h82q13-2 10-15l-10-48q-4-19-19-27Z" fill="url(#cloak)" stroke="#573f36" stroke-width="7" stroke-linejoin="round"/>
+<path d="M73 129q23 17 49 0l-5 57q-18 13-39 0Z" fill="#477867" stroke="#31524b" stroke-width="4"/>
+<path d="M87 131l9 17 10-17" fill="#f6dfaa" stroke="#735643" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="97" cy="157" r="5" fill="#f5d27b" stroke="#76503b" stroke-width="2"/>
+<circle cx="97" cy="174" r="4" fill="#f5d27b" stroke="#76503b" stroke-width="2"/>
+<!-- legs and boots -->
+<path d="M71 193l-2 17q4 7 24 5l5-5-3-18M107 192l-1 17q7 8 26 4l4-6-8-17" fill="#495b58" stroke="#503b34" stroke-width="5" stroke-linejoin="round"/>
+<path d="M67 208q12 5 27 0M106 208q14 5 29-1" fill="none" stroke="#d17957" stroke-width="5" stroke-linecap="round"/>
+<!-- arms -->
+<path d="M59 132q-13 7-17 28l-9 25q-2 11 8 13 8 1 12-10l13-29M133 132q13 6 17 24l11 25q3 11-7 15-8 2-13-9l-14-27" fill="url(#cloak)" stroke="#573f36" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M32 187q6 7 14 2l5-8q-2-8-11-8l-7 6ZM154 188q6 7 14 1l4-9q-3-8-12-7l-7 7Z" fill="#d99a6b" stroke="#704b3d" stroke-width="4"/>
+<!-- hood silhouette -->
+<path d="M44 91q2-55 51-62 51 3 56 57l-13 38q-14 22-45 22-31-2-44-25Z" fill="url(#hood)" stroke="#334c49" stroke-width="7" stroke-linejoin="round"/>
+<path d="M53 91q9-35 43-39 35 3 46 40l-10 26q-12 17-37 17-25-1-37-18Z" fill="#de9c6a" stroke="#654842" stroke-width="5"/>
+<!-- eye line, freckles, smile -->
+<path d="M72 98q9-9 18 0M105 98q9-9 18 0" fill="none" stroke="#533e3b" stroke-width="5" stroke-linecap="round"/>
+<circle cx="81" cy="99" r="3" fill="#253b3d"/><circle cx="114" cy="99" r="3" fill="#253b3d"/>
+<circle cx="69" cy="108" r="2" fill="#b66b56"/><circle cx="75" cy="112" r="2" fill="#b66b56"/><circle cx="124" cy="108" r="2" fill="#b66b56"/><circle cx="118" cy="112" r="2" fill="#b66b56"/>
+<path d="M91 113q8 8 16 0" fill="none" stroke="#8e5146" stroke-width="3" stroke-linecap="round"/>
+<ellipse cx="64" cy="107" rx="8" ry="6" fill="#e98076" opacity=".65"/><ellipse cx="130" cy="107" rx="8" ry="6" fill="#e98076" opacity=".65"/>
+<!-- leaf pin -->
+<path d="M118 48q21-29 34-20-1 21-29 30Z" fill="#a6c878" stroke="#3d6654" stroke-width="4"/>
+<path d="M121 54l23-21" stroke="#47765d" stroke-width="3"/>
+<!-- hood seam -->
+<path d="M52 85q45-20 92 1" fill="none" stroke="#93c39a" stroke-width="3" opacity=".65"/>
+</svg>
