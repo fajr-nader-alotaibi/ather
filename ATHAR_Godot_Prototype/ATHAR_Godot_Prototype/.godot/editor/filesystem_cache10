@@ -1,7 +1,7 @@
 78098b89c88a74ebe8c20117b8754620
-::res://::1791940451
+::res://::1791952242
 README.md::TextFile::-1::1791940411::0::1::::<><><>0<>0<><>::
-::res://assets/::1791940411
+::res://assets/::1791940453
 ancient_gate.png::CompressedTexture2D::5616593608437437793::1791940411::1791940453::1::::<><><>0<>0<>bc2d16fdbed205bad1201d23ae7760a0<>res://.godot/imported/ancient_gate.png-aedb628c17e992a50490c3605f0a2ef8.ctex::
 blue_crystal.png::CompressedTexture2D::1457806979976096582::1791940411::1791940453::1::::<><><>0<>0<>fa3f657542358bc14c6ee1f673db99e5<>res://.godot/imported/blue_crystal.png-0077519f0cf7bf24c400b770a19d79df.ctex::
 companion.png::CompressedTexture2D::9072195966002993482::1791940411::1791940453::1::::<><><>0<>0<>4239c7adbcb89dbaa2ed7c6c991af1a1<>res://.godot/imported/companion.png-83f0e04cc4799fe181f0bbcd3f404a2a.ctex::
@@ -20,7 +20,7 @@ ASSET_NOTES.md::TextFile::-1::1791940411::0::1::::<><><>0<>0<><>::
 PROJECT_STATUS.md::TextFile::-1::1791940411::0::1::::<><><>0<>0<><>::
 ::res://scenes/::1791940411
 main.tscn::PackedScene::-1::1791940411::0::1::::<><><>0<>0<><>::res://scripts/main.gd<>res://scripts/player.gd<>res://assets/forest_background.png<>res://assets/player.png<>res://scripts/companion.gd<>res://assets/companion.png
-::res://scripts/::1791940411
+::res://scripts/::1791940452
 companion.gd::GDScript::5585985341629223347::1791940411::0::1::::<>Node2D<><>0<>0<><>::
 main.gd::GDScript::7717160055131093772::1791940411::0::1::::<>Node2D<><>0<>0<><>::
 player.gd::GDScript::1236260256431591823::1791940411::0::1::::AtharPlayer<>CharacterBody2D<><>0<>0<><>::

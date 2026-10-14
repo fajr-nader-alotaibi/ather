@@ -1,8 +1,10 @@
 extends CharacterBody2D
-## Responsive platform movement: buffered/coyote jump, a spinning air jump, and squash/stretch.
+## Responsive platform movement with buffered/coyote jump and true pose-based sprite animation.
 
 signal interact_requested
 signal double_jump_triggered(at: Vector2)
+
+const CharacterLibrary = preload("res://scripts/character_library.gd")
 
 @export var run_speed := 300.0
 @export var ground_acceleration := 1900.0
@@ -18,26 +20,21 @@ var _jump_count := 0
 var _facing := 1
 var _bob_clock := 0.0
 var _spin_elapsed := -1.0
+var _double_jump_pose_left := 0.0
 var _spin_direction := 1
 var _landing_squash := 0.0
 var _state_send_left := 0.0
 var _net_target := Vector2.ZERO
 var _net_velocity := Vector2.ZERO
 var _remote_facing := 1
-var _remote_outfit := -1
-var _outfit_index := -1
+var _remote_avatar_code := -1
+var _avatar_code := 0
 var _was_airborne := false
+var _interaction_left := 0.0
+var _landing_left := 0.0
+var _animation_name := ""
 
-@onready var _art: Sprite2D = $Art
-
-const OUTFIT_FILES := [
-	"res://assets/outfits/explorer_0.svg",
-	"res://assets/outfits/explorer_1.svg",
-	"res://assets/outfits/explorer_2.svg",
-	"res://assets/outfits/explorer_3.svg",
-	"res://assets/outfits/explorer_4.svg",
-	"res://assets/outfits/explorer_5.svg"
-]
+@onready var _art: AnimatedSprite2D = $Art
 
 
 func _ready() -> void:
@@ -47,7 +44,7 @@ func _ready() -> void:
 	floor_stop_on_slope = true
 	_net_target = global_position
 	_apply_difficulty()
-	_set_outfit(GameSession.outfit_index)
+	_set_avatar(GameSession.current_avatar_code())
 	_create_name_tag()
 
 
@@ -82,16 +79,24 @@ func _create_name_tag() -> void:
 	add_child(tag)
 
 
-func configure_avatar(index: int, display_name: String) -> void:
-	_set_outfit(index)
+func configure_avatar(avatar_code: int, display_name: String) -> void:
+	_set_avatar(avatar_code)
 	var tag := get_node_or_null("NameTag") as Label
 	if is_instance_valid(tag):
 		tag.text = display_name
 
 
-func _set_outfit(index: int) -> void:
-	_outfit_index = clampi(index, 0, OUTFIT_FILES.size() - 1)
-	_art.texture = load(OUTFIT_FILES[_outfit_index])
+func get_avatar_code() -> int:
+	return _avatar_code
+
+
+func _set_avatar(avatar_code: int) -> void:
+	_avatar_code = clampi(avatar_code, 0, 11)
+	CharacterLibrary.configure_sprite(_art, floori(float(_avatar_code) / 6.0), _avatar_code % 6)
+	_art.position = Vector2(0.0, -15.0)
+	_art.scale = Vector2(0.55, 0.55)
+	_animation_name = ""
+	_play_animation("idle")
 
 
 func _physics_process(delta: float) -> void:
@@ -100,11 +105,15 @@ func _physics_process(delta: float) -> void:
 		global_position = global_position.lerp(_net_target, minf(1.0, delta * 13.0))
 		velocity = _net_velocity
 		_art.flip_h = _remote_facing < 0
-		if _remote_outfit >= 0 and _remote_outfit != _outfit_index:
-			_set_outfit(_remote_outfit)
+		if _remote_avatar_code >= 0 and _remote_avatar_code != _avatar_code:
+			_set_avatar(_remote_avatar_code)
+		_update_animation(_net_velocity.x, _net_velocity.y, absf(_net_velocity.y) < 4.0, delta)
 		return
 
 	_bob_clock += delta
+	_interaction_left = maxf(0.0, _interaction_left - delta)
+	_landing_left = maxf(0.0, _landing_left - delta)
+	_double_jump_pose_left = maxf(0.0, _double_jump_pose_left - delta)
 	var grounded_before := is_on_floor()
 	if grounded_before:
 		_coyote_left = coyote_time
@@ -118,6 +127,7 @@ func _physics_process(delta: float) -> void:
 		_jump_buffer_left = maxf(0.0, _jump_buffer_left - delta)
 
 	if Input.is_action_just_pressed("interact"):
+		_interaction_left = 0.34
 		interact_requested.emit()
 
 	var axis := Input.get_axis("move_left", "move_right")
@@ -145,6 +155,7 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor():
 		if _was_airborne:
 			_landing_squash = 0.13
+			_landing_left = 0.22
 			_spin_elapsed = -1.0
 			_art.rotation = 0.0
 		_jump_count = 0
@@ -164,7 +175,7 @@ func _physics_process(delta: float) -> void:
 		_art.rotation = move_toward(_art.rotation, 0.0, delta * 2.5)
 
 	var bob := sin(_bob_clock * 9.0) * 2.0 if is_on_floor() and absf(axis) > 0.1 else 0.0
-	_art.position.y = -13.0 + bob
+	_art.position.y = -15.0 + bob
 	var stretch := 0.0
 	if velocity.y < -100.0:
 		stretch = 0.08
@@ -173,31 +184,65 @@ func _physics_process(delta: float) -> void:
 	if _landing_squash > 0.0:
 		stretch = -0.14 * (_landing_squash / 0.13)
 	_art.scale = Vector2(0.55 * (1.0 - stretch * 0.45), 0.55 * (1.0 + stretch))
+	_update_animation(axis * run_speed, velocity.y, is_on_floor(), delta)
 
 	_state_send_left -= delta
 	if GameSession.is_networked and _state_send_left <= 0.0:
 		_state_send_left = 0.06
-		GameSession.send_player_state(get_multiplayer_authority(), global_position, velocity, _facing, _outfit_index)
+		GameSession.send_player_state(get_multiplayer_authority(), global_position, velocity, _facing, _avatar_code)
+
+
+func _update_animation(horizontal_speed: float, vertical_speed: float, grounded: bool, _delta: float) -> void:
+	var next := "idle"
+	if _interaction_left > 0.0:
+		next = "interact"
+	elif grounded and _landing_left > 0.0:
+		next = "land"
+	elif not grounded and _double_jump_pose_left > 0.0:
+		next = "double_jump"
+	elif not grounded and _spin_elapsed >= 0.0:
+		next = "air_spin"
+	elif not grounded and vertical_speed < -35.0:
+		next = "jump"
+	elif not grounded:
+		next = "fall"
+	elif absf(horizontal_speed) > run_speed * 0.72:
+		next = "run"
+	elif absf(horizontal_speed) > 18.0:
+		next = "walk"
+	_play_animation(next)
+
+
+func _play_animation(next: String) -> void:
+	if _animation_name == next:
+		return
+	_animation_name = next
+	if _art.sprite_frames != null and _art.sprite_frames.has_animation(next):
+		_art.play(next)
+	else:
+		_art.play("idle")
 
 
 func _start_jump(is_double: bool) -> void:
 	velocity.y = jump_velocity * (0.92 if is_double else 1.0)
 	_jump_buffer_left = 0.0
 	_coyote_left = 0.0
+	_landing_left = 0.0
 	_jump_count = 2 if is_double else 1
 	if is_double:
 		_spin_elapsed = 0.0
+		_double_jump_pose_left = 0.18
 		_spin_direction = _facing
 		double_jump_triggered.emit(global_position + Vector2(0, -35))
 
 
-func receive_network_state(position: Vector2, new_velocity: Vector2, facing: int, outfit: int) -> void:
+func receive_network_state(position: Vector2, new_velocity: Vector2, facing: int, avatar_code: int) -> void:
 	if get_multiplayer_authority() == multiplayer.get_unique_id():
 		return
 	_net_target = position
 	_net_velocity = new_velocity
 	_remote_facing = facing
-	_remote_outfit = outfit
+	_remote_avatar_code = avatar_code
 
 
 func reset_to_spawn(spawn_point: Vector2) -> void:
@@ -208,4 +253,14 @@ func reset_to_spawn(spawn_point: Vector2) -> void:
 	_jump_buffer_left = 0.0
 	_jump_count = 0
 	_spin_elapsed = -1.0
+	_double_jump_pose_left = 0.0
+	_interaction_left = 0.0
+	_landing_left = 0.0
+	_landing_squash = 0.0
+	_was_airborne = false
+	_facing = 1
+	_art.flip_h = false
 	_art.rotation = 0.0
+	_art.position = Vector2(0.0, -15.0)
+	_art.scale = Vector2(0.55, 0.55)
+	_play_animation("idle")

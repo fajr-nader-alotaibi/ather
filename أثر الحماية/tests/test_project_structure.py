@@ -21,7 +21,7 @@ class ProjectStructureTests(unittest.TestCase):
             text = source.read_text(encoding="utf-8")
             # Only validate literal resources; dynamic paths such as explorer_%d.svg
             # are assembled at runtime and cannot be resolved from the format string.
-            resources = re.findall(r'res://([A-Za-z0-9_./-]+\.(?:gd|tscn|svg))', text)
+            resources = re.findall(r'res://([A-Za-z0-9_./-]+\.(?:gdshader|gd|tscn|svg|png))', text)
             for resource in resources:
                 self.assertTrue((ROOT / resource).is_file(), f"{source.relative_to(ROOT)} references missing {resource}")
 
@@ -46,10 +46,38 @@ class ProjectStructureTests(unittest.TestCase):
     def test_fall_keeps_seed_progress_and_interaction_reaches_gate(self):
         game = (ROOT / "scripts" / "hope_forest.gd").read_text(encoding="utf-8")
         self.assertIn("func _respawn_player(player: CharacterBody2D)", game)
-        self.assertIn("player.global_position = _checkpoint", game)
+        self.assertIn('player.call("reset_to_spawn", _checkpoint)', game)
         self.assertIn("_collected_seed_ids.size()", game)
         self.assertIn("[KEY_E, KEY_F, KEY_ENTER, KEY_KP_ENTER]", game)
         self.assertIn("player.global_position.distance_to(GATE_POINT) < 210.0", game)
+
+    def test_player_uses_two_character_animation_sets_and_palette(self):
+        library = (ROOT / "scripts" / "character_library.gd").read_text(encoding="utf-8")
+        player_scene = (ROOT / "scenes" / "player.tscn").read_text(encoding="utf-8")
+        selector = (ROOT / "scripts" / "character_select.gd").read_text(encoding="utf-8")
+        frame_counts = {
+            "idle": 1, "walk": 2, "run": 2, "jump": 1, "fall": 1,
+            "land": 1, "interact": 1, "double_jump": 2, "air_spin": 3,
+        }
+        for state in [*frame_counts, "celebrate"]:
+            self.assertIn(f'"{state}"', library)
+        self.assertIn('type="AnimatedSprite2D"', player_scene)
+        self.assertIn("palette_color(index)", selector)
+        self.assertIn("GameSession.character_index = _character_index", selector)
+        for character in ["lina", "rayan"]:
+            folder = ROOT / "assets" / "characters" / character
+            for state, expected_count in frame_counts.items():
+                frames = sorted(folder.glob(f"{state}_*.png"))
+                self.assertEqual(len(frames), expected_count, f"{character}/{state}")
+                for frame in frames:
+                    self.assertEqual(frame.read_bytes()[:8], b"\x89PNG\r\n\x1a\n")
+                if expected_count > 1:
+                    self.assertEqual(len({frame.read_bytes() for frame in frames}), expected_count, f"duplicate {character}/{state} frames")
+            self.assertTrue((folder / "portrait.png").is_file(), f"{character}/portrait.png")
+
+    def test_interaction_parse_error_is_typed(self):
+        game = (ROOT / "scripts" / "hope_forest.gd").read_text(encoding="utf-8")
+        self.assertIn("var key: int = int(", game)
 
     def test_browser_preview_uses_local_game_assets(self):
         game = (ROOT / "web-preview" / "game.js").read_text(encoding="utf-8")

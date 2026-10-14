@@ -22,7 +22,6 @@ var _win_layer: ColorRect
 var _chapter_label: Label
 var _seed_title: Label
 var _party_label: Label
-var _language_button: Button
 
 const NIGHT := Color("172f38")
 const NIGHT_SOFT := Color("23464a")
@@ -66,8 +65,8 @@ func _build_panels() -> void:
 	var seed_panel := _panel(Vector2(0, 24), Vector2(282, 90))
 	seed_panel.anchor_left = 1.0
 	seed_panel.anchor_right = 1.0
-	seed_panel.offset_left = -308.0
-	seed_panel.offset_right = -26.0
+	seed_panel.offset_left = -380.0
+	seed_panel.offset_right = -98.0
 	var seed_box := VBoxContainer.new()
 	seed_box.add_theme_constant_override("separation", 4)
 	seed_panel.add_child(seed_box)
@@ -75,6 +74,7 @@ func _build_panels() -> void:
 	seed_box.add_child(_seed_title)
 	_seed_counter = _label("", 26, GOLD)
 	_seed_counter.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_seed_counter.text_direction = Control.TEXT_DIRECTION_LTR
 	seed_box.add_child(_seed_counter)
 	var party_panel := _panel(Vector2(0, 24), Vector2(260, 70))
 	party_panel.anchor_left = 0.5
@@ -85,15 +85,7 @@ func _build_panels() -> void:
 	_party_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_party_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	party_panel.add_child(_party_label)
-	_language_button = _button(_text("language_button"), Vector2.ZERO, Vector2(92, 58), false)
-	_language_button.anchor_left = 1.0
-	_language_button.anchor_right = 1.0
-	_language_button.offset_left = -190.0
-	_language_button.offset_right = -98.0
-	_language_button.offset_top = 28.0
-	_language_button.offset_bottom = 86.0
-	_language_button.add_theme_font_size_override("font_size", 15)
-	_language_button.pressed.connect(_toggle_language)
+
 	var pause_button := _button("Ⅱ", Vector2.ZERO, Vector2(62, 58), true)
 	pause_button.anchor_left = 1.0
 	pause_button.anchor_right = 1.0
@@ -331,12 +323,6 @@ func _show_win() -> void:
 	refresh()
 
 
-func _toggle_language() -> void:
-	GameSession.language = "en" if language == "ar" else "ar"
-	language = GameSession.language
-	GameSession.save_profile()
-	refresh()
-
 
 func _text(key: String) -> String:
 	return TextCatalog.text(key, language)
@@ -348,7 +334,6 @@ func refresh() -> void:
 	_chapter_label.text = _text("chapter")
 	_objective.text = _text("objective") if not _restored else _text("objective_restored")
 	_seed_title.text = _text("seeds")
-	_language_button.text = _text("language_button")
 	_seed_counter.text = "%d / 3   ✦" % _seeds
 	_party_label.text = _text("solo") if not GameSession.is_networked else "%s  ·  %d/4" % [_text("team"), GameSession.active_peer_ids().size()]
 	_hint_label.text = _hint

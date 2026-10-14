@@ -117,7 +117,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		return
 	if event is InputEventKey and event.pressed and not event.echo:
-		var key := event.physical_keycode if event.physical_keycode != 0 else event.keycode
+		var key: int = int(event.physical_keycode if event.physical_keycode != 0 else event.keycode)
 		if key in [KEY_E, KEY_F, KEY_ENTER, KEY_KP_ENTER]:
 			_on_local_interact(multiplayer.get_unique_id() if GameSession.is_networked else 1)
 			get_viewport().set_input_as_handled()
@@ -409,10 +409,9 @@ func _restart_level() -> void:
 
 
 func _respawn_player(player: CharacterBody2D) -> void:
-	player.global_position = _checkpoint
-	player.velocity = Vector2.ZERO
+	player.call("reset_to_spawn", _checkpoint)
 	if player.get_multiplayer_authority() == (multiplayer.get_unique_id() if GameSession.is_networked else 1):
-		GameSession.send_player_state(player.get_multiplayer_authority(), player.global_position, Vector2.ZERO, 1, GameSession.outfit_index)
+		GameSession.send_player_state(player.get_multiplayer_authority(), player.global_position, Vector2.ZERO, 1, player.call("get_avatar_code"))
 
 
 

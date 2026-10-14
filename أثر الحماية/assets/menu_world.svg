@@ -1,20 +1,148 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
-<defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#77c9e4"/><stop offset=".55" stop-color="#c6e5ce"/><stop offset="1" stop-color="#efc48f"/></linearGradient><linearGradient id="water" x2="0" y2="1"><stop stop-color="#8bfff0"/><stop offset="1" stop-color="#47a9b4"/></linearGradient><linearGradient id="grass" x2="0" y2="1"><stop stop-color="#c0df76"/><stop offset=".25" stop-color="#69a84d"/><stop offset="1" stop-color="#286247"/></linearGradient><linearGradient id="bark" x2="1"><stop stop-color="#4e3931"/><stop offset=".5" stop-color="#8d6648"/><stop offset="1" stop-color="#483630"/></linearGradient><radialGradient id="glow"><stop stop-color="#fffbd4"/><stop offset="1" stop-color="#fffbd4" stop-opacity="0"/></radialGradient></defs>
-<rect width="1920" height="1080" fill="url(#sky)"/><circle cx="1050" cy="260" r="330" fill="url(#glow)"/>
-<g fill="#fffce8" opacity=".7"><ellipse cx="426" cy="183" rx="180" ry="54"/><ellipse cx="510" cy="155" rx="100" ry="63"/><ellipse cx="620" cy="184" rx="145" ry="43"/><ellipse cx="1120" cy="118" rx="135" ry="43"/><ellipse cx="1220" cy="129" rx="165" ry="37"/></g>
-<path d="M0 640 180 440 315 543 495 314 638 486 810 354 955 530 1120 330 1280 510 1472 292 1602 482 1788 318 1920 442V1080H0Z" fill="#739a9b"/><path d="m402 418 93-104 86 139-61-37-30 17-38-31-25 14Zm306 30 103-101 88 174-73-53-37 8-40-34-25 14Zm658-72 107-84 88 169-68-47-40 15-44-35-29 12Z" fill="#f3f3d7" opacity=".8"/>
-<!-- Floating islands -->
-<g><path d="M1170 253q80-70 153-14 66-67 142-5 70-50 137 5v39h-432Z" fill="#559456"/><path d="M1200 276h402l-58 85-54 91-64-80-70 94-57-90-66 78-66-122Z" fill="#987250"/><path d="M1395 236q65-78 141-12 68-72 145-7 65-36 124 13v47h-410Z" fill="#418a58"/></g>
-<!-- Waterfall and glowing ancient gate -->
-<path d="M1454 358h312v226h-312z" fill="#98876d"/><path d="M1480 382h257v178h-257z" fill="#c2a87e"/><path d="M1516 557V458q0-83 87-83t87 83v99Z" fill="#6a5949"/><path d="M1541 557V461q0-56 62-56t62 56v96Z" fill="url(#water)"/><ellipse cx="1603" cy="452" rx="115" ry="122" fill="url(#glow)"/><circle cx="1603" cy="452" r="17" fill="#faffd9"/><path d="M1603 468v62m-24-42 24-20 24 20" fill="none" stroke="#e5ffe0" stroke-width="8" stroke-linecap="round"/><path d="M1508 584h190v170h-190z" fill="url(#water)"/><path d="M1485 584q67 22 122 0t114 0" fill="none" stroke="#efffe7" stroke-width="12"/>
-<!-- Huge left tree -->
-<path d="M0 0h638Q475 96 380 191q-91 91-154 236Q140 578 0 680Z" fill="url(#bark)"/><path d="M65 0q98 122 259 170M171 0q43 128 4 251t-118 186M364 0q-45 123-45 248" fill="none" stroke="#b1855c" stroke-width="24" opacity=".6" stroke-linecap="round"/><path d="M-30 245Q-8 73 168 70q47-155 202-56 145-89 282 8 151-69 245 39 158-34 201 122 110-7 131 112l-48 174H-30Z" fill="#246a43"/><g fill="#348550"><ellipse cx="100" cy="170" rx="165" ry="112"/><ellipse cx="278" cy="112" rx="155" ry="109"/><ellipse cx="453" cy="126" rx="158" ry="111"/><ellipse cx="627" cy="188" rx="154" ry="106"/><ellipse cx="804" cy="225" rx="156" ry="104"/></g><g fill="#75b85b"><ellipse cx="100" cy="132" rx="81" ry="48"/><ellipse cx="277" cy="77" rx="90" ry="48"/><ellipse cx="468" cy="88" rx="92" ry="50"/><ellipse cx="630" cy="153" rx="88" ry="49"/></g>
-<!-- Right trees -->
-<path d="M1920 104q-107 115-126 281t-113 224l239 97Z" fill="url(#bark)"/><path d="M1935 0q-117-25-171 100-145-52-208 82-143-25-202 115-127 7-149 121l18 166h712Z" fill="#2b7048"/><g fill="#4b9953"><ellipse cx="1838" cy="135" rx="125" ry="83"/><ellipse cx="1698" cy="211" rx="143" ry="98"/><ellipse cx="1800" cy="323" rx="151" ry="102"/><ellipse cx="1646" cy="369" rx="128" ry="91"/></g>
-<!-- Green foreground, path -->
-<path d="M0 832q180-80 354 3t349-14q174-82 355 12t350-5q185-97 364 8t375-12v256H0Z" fill="#34764b"/><path d="M0 889q225-52 433 13t400-8q211-78 405 5t369-4q177-70 313-2v187H0Z" fill="url(#grass)"/><path d="M0 989q219-54 425 0t400 0q215-70 410 4t367-3q182-47 318 6v84H0Z" fill="#246044"/><path d="M640 1080q120-134 244-203 90-51 181-83t161-92l82 14q-79 101-188 153t-190 99q-105 62-195 112Z" fill="#b88e5d"/><path d="M755 1080q100-117 220-179t252-102" fill="none" stroke="#dfc17e" stroke-width="12" opacity=".8"/>
-<!-- Flowers, glowing crystals -->
-<g fill="#dcb6ff"><circle cx="93" cy="936" r="20"/><circle cx="116" cy="922" r="18"/><circle cx="138" cy="941" r="19"/><circle cx="114" cy="958" r="17"/></g><circle cx="116" cy="941" r="9" fill="#fff1a9"/><g fill="#ffc5dd"><circle cx="356" cy="990" r="15"/><circle cx="374" cy="981" r="14"/><circle cx="394" cy="997" r="15"/></g><circle cx="376" cy="991" r="6" fill="#fff0a7"/><g fill="#bbcbff"><circle cx="1755" cy="937" r="20"/><circle cx="1777" cy="925" r="18"/><circle cx="1798" cy="946" r="19"/><circle cx="1776" cy="962" r="17"/></g><circle cx="1777" cy="944" r="8" fill="#fff2ad"/>
-<path d="m500 937 34-94 34 94Z" fill="#58dbe8"/><path d="m1662 991 36-102 36 102Z" fill="#65dff2"/><path d="M230 943v-48q22-17 43 0v48M1840 973v-64q27-21 52 0v64" fill="#e8d5a5"/><path d="M198 897q6-58 52-66 46 8 53 66-54 20-105 0Zm1602 2q7-66 65-74 58 8 66 74-66 22-131 0Z" fill="#a85b8f"/>
-<g fill="#fff3ad"><circle cx="724" cy="452" r="6"/><circle cx="850" cy="560" r="5"/><circle cx="1118" cy="471" r="5"/><circle cx="1287" cy="624" r="4"/><circle cx="1010" cy="715" r="5"/><circle cx="601" cy="738" r="4"/></g>
+<defs>
+  <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#72b8d7"/><stop offset=".48" stop-color="#b9dce0"/><stop offset=".82" stop-color="#dce4c2"/><stop offset="1" stop-color="#f0d3a0"/></linearGradient>
+  <linearGradient id="mountain" x2="0" y2="1"><stop stop-color="#8fb9ba"/><stop offset="1" stop-color="#719a96"/></linearGradient>
+  <linearGradient id="mountainFar" x2="0" y2="1"><stop stop-color="#b0d3d1"/><stop offset="1" stop-color="#92b9b4"/></linearGradient>
+  <linearGradient id="canopy" x2="0" y2="1"><stop stop-color="#38845d"/><stop offset="1" stop-color="#1f624b"/></linearGradient>
+  <linearGradient id="bark" x2="1"><stop stop-color="#483b32"/><stop offset=".45" stop-color="#806148"/><stop offset=".72" stop-color="#a27a53"/><stop offset="1" stop-color="#534236"/></linearGradient>
+  <linearGradient id="meadow" x2="0" y2="1"><stop stop-color="#8db861"/><stop offset=".32" stop-color="#4f9253"/><stop offset="1" stop-color="#1e5945"/></linearGradient>
+  <linearGradient id="path" x2="0" y2="1"><stop stop-color="#c7a775"/><stop offset=".55" stop-color="#b38d60"/><stop offset="1" stop-color="#92704f"/></linearGradient>
+  <linearGradient id="crystal" x2="0" y2="1"><stop stop-color="#d9fff0"/><stop offset=".28" stop-color="#73d9e3"/><stop offset="1" stop-color="#3295ad"/></linearGradient>
+  <linearGradient id="crystalViolet" x2="0" y2="1"><stop stop-color="#f3e4ff"/><stop offset=".4" stop-color="#bb94e8"/><stop offset="1" stop-color="#7464bb"/></linearGradient>
+  <radialGradient id="sunGlow"><stop stop-color="#fff7d5" stop-opacity=".88"/><stop offset=".35" stop-color="#fff2c7" stop-opacity=".32"/><stop offset="1" stop-color="#fff1cc" stop-opacity="0"/></radialGradient>
+  <radialGradient id="crystalGlow"><stop stop-color="#a8fff1" stop-opacity=".55"/><stop offset="1" stop-color="#72e4e5" stop-opacity="0"/></radialGradient>
+  <radialGradient id="warmLantern"><stop stop-color="#fff3b1" stop-opacity=".45"/><stop offset="1" stop-color="#ffd06f" stop-opacity="0"/></radialGradient>
+</defs>
+
+<!-- Open sky and soft, faraway clouds -->
+<rect width="1920" height="1080" fill="url(#sky)"/>
+<ellipse cx="1090" cy="318" rx="590" ry="315" fill="url(#sunGlow)"/>
+<g fill="#f7f7e9" opacity=".42">
+  <ellipse cx="750" cy="168" rx="145" ry="34"/><ellipse cx="836" cy="155" rx="116" ry="42"/><ellipse cx="920" cy="174" rx="145" ry="31"/>
+  <ellipse cx="1258" cy="252" rx="130" ry="30"/><ellipse cx="1346" cy="235" rx="92" ry="42"/><ellipse cx="1436" cy="254" rx="142" ry="28"/>
+  <ellipse cx="1010" cy="405" rx="120" ry="24" opacity=".5"/><ellipse cx="1164" cy="395" rx="174" ry="28" opacity=".45"/>
+</g>
+<circle cx="1410" cy="270" r="105" fill="#fff4c7" opacity=".23"/>
+<circle cx="1410" cy="270" r="62" fill="#fff4da" opacity=".3"/>
+<!-- A pale opening in the canopy keeps the separate title treatment easy to read -->
+<ellipse cx="635" cy="165" rx="420" ry="245" fill="url(#sunGlow)" opacity=".55"/>
+
+<!-- Distant ridges, floating cliffs, and blue forest haze -->
+<path d="M0 648C85 590 119 518 197 488c49 20 78 84 133 103 43-71 98-183 165-219 58 52 83 127 146 154 63-61 111-134 171-178 58 57 98 143 156 176 74-49 113-119 182-166 60 61 98 137 167 169 76-63 133-143 201-204 67 71 106 152 172 187 70-58 143-117 230-63V884H0Z" fill="url(#mountainFar)"/>
+<path d="M363 520c48-61 87-129 132-164 41 38 63 98 99 134-43-18-71-32-94-28-28 4-62 37-91 58-19-9-32-12-46 0Zm369-14c47-61 93-127 139-160 44 45 72 111 116 151-45-20-78-39-111-30-36 10-72 34-112 49-10-6-20-9-32-10Zm560-26c31-47 69-101 102-132 38 43 68 92 103 127-33-12-57-27-83-20-31 8-59 29-92 39-10-5-20-10-30-14Zm305 17c45-62 83-138 122-182 50 59 81 128 122 168-48-22-77-37-112-27-37 10-70 34-110 47-7-3-14-5-22-6Z" fill="#eef0df" opacity=".62"/>
+<path d="M0 686c62-40 119-76 182-98 64 26 104 58 156 64 59-43 106-87 169-117 58 37 96 84 141 115 63-35 104-69 161-99 62 37 107 77 155 117 66-38 111-82 174-133 54 32 96 79 149 120 59-37 111-91 173-147 59 41 96 87 137 136 66-35 114-78 165-102 73 29 118 58 158 80V900H0Z" fill="url(#mountain)" opacity=".72"/>
+<g fill="#d5e7d7" opacity=".36">
+  <path d="M0 710q170-74 340 0t336-10q168-90 342 7t340-9q171-74 334 10t228-2v173H0Z"/>
+  <path d="M0 783q200-87 403-4t389-7q209-90 410 0t400-6q171-55 318 11v110H0Z"/>
+</g>
+<g opacity=".7">
+  <path d="M1360 386q74-64 155-18 70-70 151-3 68-54 139 12v43h-445Z" fill="#477f63"/>
+  <path d="M1390 420h398l-59 73-48 70-67-62-61 85-71-74-58 61-62-96Z" fill="#937354"/>
+  <path d="M1470 402q65-82 135-20 74-76 149-14 75-39 126 19v41h-410Z" fill="#39745b"/>
+</g>
+
+<!-- A distant, quiet waterfall in the open center -->
+<path d="M1110 486h160v190h-160Z" fill="#849d83" opacity=".55"/>
+<path d="M1140 498h100v254q-44 16-100 0Z" fill="#a6e8df" opacity=".5"/>
+<path d="M1153 510v236m27-238v250m28-244v235m25-226v221" stroke="#e2fff0" stroke-width="7" opacity=".32"/>
+<path d="M1070 754q90 18 153 0t153 0" fill="none" stroke="#d5fff0" stroke-width="10" opacity=".46"/>
+
+<!-- Framing old trees: keep the central sky open for the title -->
+<path d="M-55-20h243q-16 184 87 345 73 113 51 255-14 96 60 245l-179 57Q108 760 68 637 19 491-8 355Z" fill="url(#bark)"/>
+<path d="M-8 104q117 138 222 204M24 264q83 103 83 206t87 236M155 18q-3 140 47 228" fill="none" stroke="#bb9465" stroke-width="24" opacity=".45" stroke-linecap="round"/>
+<path d="M-35 0C40-48 104-34 153 6c58-42 132-31 173 16 62-29 127 5 130 59 47 27 31 90-16 108-46 19-91 8-123-13-37 36-102 31-137 0-42 30-95 26-124-12-57 25-105 5-103-31-45 10-72-12-49-51Z" fill="#1e6049"/>
+<g fill="url(#canopy)">
+  <ellipse cx="42" cy="93" rx="130" ry="105"/><ellipse cx="190" cy="65" rx="129" ry="86"/><ellipse cx="320" cy="95" rx="125" ry="88"/>
+</g>
+<g fill="#71ae62" opacity=".76">
+  <ellipse cx="49" cy="90" rx="59" ry="38"/><ellipse cx="193" cy="55" rx="66" ry="37"/><ellipse cx="320" cy="78" rx="61" ry="38"/>
+</g>
+<g fill="#a2ce76" opacity=".44">
+  <ellipse cx="89" cy="139" rx="29" ry="15"/><ellipse cx="252" cy="102" rx="27" ry="14"/><ellipse cx="373" cy="132" rx="29" ry="15"/>
+</g>
+
+<path d="M1984 16q-119 106-135 267t-103 217q-66 67-75 170l220 128 116-196Z" fill="url(#bark)"/>
+<path d="M1926-18q-127-36-194 81-127-51-209 43-129-33-196 77-106 13-148 106l15 150q116 42 214-11 113 52 211-8 121 51 219-18 118 18 307-54V-18Z" fill="#245f49"/>
+<g fill="#43885b">
+  <ellipse cx="1819" cy="109" rx="157" ry="103"/><ellipse cx="1684" cy="187" rx="151" ry="95"/><ellipse cx="1815" cy="278" rx="153" ry="98"/><ellipse cx="1666" cy="353" rx="130" ry="86"/>
+</g>
+<g fill="#8dc66b" opacity=".54"><ellipse cx="1800" cy="96" rx="63" ry="35"/><ellipse cx="1681" cy="170" rx="59" ry="33"/><ellipse cx="1816" cy="255" rx="62" ry="34"/></g>
+
+<!-- Hand-painted edge foliage, branch veins, and bark brush marks -->
+<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M22 215q120 25 210 114t113 171" stroke="#c29a68" stroke-width="9" opacity=".43"/>
+  <path d="M77 333q72 8 114 49m-43-81q-1 74 39 109m27-1q52 18 79 60" stroke="#d4b07a" stroke-width="4" opacity=".52"/>
+  <path d="M1834 194q-80 52-140 135t-70 156" stroke="#b28b61" stroke-width="8" opacity=".42"/>
+  <path d="M1802 295q-58 19-92 59m64-102q-12 57-44 92m-25 35q-47 10-72 47" stroke="#d1aa77" stroke-width="4" opacity=".48"/>
+  <path d="M78 886q-5-38 15-70m29 67q1-44 24-74m98 89q-4-34 16-59m1291 62q2-38 26-69m44 77q6-42 28-62m170 69q-1-45 24-76" stroke="#d5e394" stroke-width="5" opacity=".7"/>
+</g>
+<g stroke="#2b694b" stroke-width="2.5" stroke-linejoin="round">
+  <path d="M108 226q-55-58-44-105 53 8 72 66 17-62 72-73 3 57-53 99 69-20 108 21-48 36-117 8 42 43 26 87-51-24-65-88-13 57-60 67-20-48 21-82-55 11-81-26 50-33 121 26Z" fill="#5ca163"/>
+  <path d="M1687 197q44-53 91-42-5 50-54 74 62-9 91 30-43 34-101 10 34 36 20 74-43-21-53-72-13 47-50 55-18-39 15-71-44 8-65-22 42-29 106 16Z" fill="#579b61"/>
+  <path d="M135 261q-34-24-38-55 34 1 48 33 12-32 43-38 3 33-29 54 39-11 60 12-28 20-66 5 24 25 14 50-29-14-34-49-9 31-35 37-10-27 12-45-31 6-47-15 29-18 72 11Z" fill="#86bd6d"/>
+  <path d="M1713 234q28-27 58-19-7 31-38 43 37-4 53 21-26 23-61 9 20 23 10 47-27-13-30-44-11 28-34 30-9-24 13-42-26 4-37-15 26-19 66-1Z" fill="#8abd70"/>
+</g>
+<g fill="none" stroke="#d5e6a1" stroke-width="2.5" opacity=".64" stroke-linecap="round">
+  <path d="M82 146q60 33 127 104m-100-83-31-5m75 36 2-29m20 52 31-9m-48 19 3 32"/>
+  <path d="M1698 194q42 29 87 81m-67-65-24 1m54 31 1-24m14 39 24-6m-47 19 1 24"/>
+</g>
+<!-- Deep forest silhouettes and a softly lit clearing -->
+<path d="M0 734q157-102 325 4 95-83 216-23 105-102 224-19 140-95 257 27 112-84 236-25 136-116 262 21 125-93 235-10 88-59 165-2v250H0Z" fill="#376e55" opacity=".58"/>
+<path d="M0 810q137-111 268-30 124-135 270-15 110-76 224-20 133-91 259 6 135-88 266-8 127-91 255-7 110-82 192-4v207H0Z" fill="#4b8059" opacity=".72"/>
+<ellipse cx="846" cy="823" rx="530" ry="187" fill="#f5e6bd" opacity=".12"/>
+
+<!-- Foreground banks, roots, moss, and the winding trail into the woods -->
+<path d="M0 859q185-69 346 1 187-77 369 15 178-95 367 1 182-72 363 9 234-83 475 5v190H0Z" fill="#286347"/>
+<path d="M0 914q182-72 374 0 174-61 352 10 193-83 381-4 187-77 389 2 234-75 424 1v157H0Z" fill="url(#meadow)"/>
+<path d="M286 1080q54-111 175-207 97-76 215-112 123-38 246-92 133-59 248-135l88 25q-115 101-240 160-123 59-256 98-127 37-226 112-93 71-150 151Z" fill="url(#path)"/>
+<path d="M375 1080q77-107 177-176 114-78 260-120 153-44 267-109 103-59 190-120" fill="none" stroke="#d7bd87" stroke-width="17" opacity=".8"/>
+<path d="M575 1080q68-94 161-144 132-71 276-102 138-30 252-89 78-40 139-84" fill="none" stroke="#876b4c" stroke-width="7" opacity=".42"/>
+<g fill="#b1ca72" opacity=".8">
+  <path d="M57 887q36-73 90-101-7 55-56 110 47-38 96-42-32 53-111 67-21 1-19-34Z"/>
+  <path d="M1790 903q-25-66-72-102 1 52 43 103-41-36-86-44 27 51 99 67 21 2 16-24Z"/>
+  <path d="M1495 898q21-52 57-78 1 41-31 83 32-30 68-37-20 42-76 58-18 1-18-26Z"/>
+</g>
+
+<!-- Glowing crystal clusters, with soft halos -->
+<circle cx="328" cy="835" r="105" fill="url(#crystalGlow)"/>
+<path d="m278 902 34-99 31 99Zm49 0 47-137 43 137Zm75 0 25-78 25 78Z" fill="url(#crystal)" stroke="#b7fff0" stroke-width="5" stroke-linejoin="round"/>
+<path d="m313 804 11 97m47-116-4 117m44-72 0 72" stroke="#e2fff8" stroke-width="7" opacity=".76"/>
+<circle cx="836" cy="864" r="78" fill="url(#crystalGlow)"/>
+<path d="m792 909 26-72 25 72Zm40 0 33-102 31 102Z" fill="url(#crystalViolet)" stroke="#f0dcff" stroke-width="4" stroke-linejoin="round"/>
+<circle cx="1745" cy="859" r="118" fill="url(#crystalGlow)"/>
+<path d="m1674 936 41-122 37 122Zm55 0 48-166 46 166Zm82 0 32-98 31 98Z" fill="url(#crystal)" stroke="#bbfff1" stroke-width="5" stroke-linejoin="round"/>
+
+<!-- Worn path stones, fern curls, and loose painted grass strokes -->
+<g fill="#d9c395" opacity=".62">
+  <path d="M434 973q18-17 42-5 13 11-2 19-24 8-42-2-7-6 2-12Z"/><path d="M581 889q20-17 43-5 13 10-3 18-24 8-42-1-7-5 2-12Z"/>
+  <path d="M740 805q18-15 39-4 12 9-3 17-22 7-39-1-7-5 3-12Z"/><path d="M901 720q18-16 39-5 12 10-3 17-21 8-38 0-7-5 2-12Z"/>
+</g>
+<g fill="none" stroke="#d5e390" stroke-width="5" stroke-linecap="round" opacity=".75">
+  <path d="M42 895q8-28 29-42m9 54q-3-31 11-53m141 65q3-24 20-39m1214 42q2-28 19-48m134 55q7-24 26-36m95 47q-2-29 14-46"/>
+</g>
+<g fill="none" stroke="#6ac7a4" stroke-width="4" opacity=".58" stroke-linecap="round">
+  <path d="M1534 1036q-19-45 2-75 25 27 8 57 35-37 63-19-13 40-52 39 39 9 39 41-43 7-61-28Z"/>
+  <path d="M136 1062q-17-41 1-67 23 24 8 52 32-33 56-17-11 36-46 35 34 8 35 37-38 7-54-25Z"/>
+</g>
+<!-- Storybook mushrooms and little pools -->
+<path d="M117 926v-91q32-29 68 0v91Z" fill="#e4bf8c"/><path d="M89 841q7-75 62-84 57 10 67 84-63 25-129 0Z" fill="#c46f8b" stroke="#f2b7c6" stroke-width="8"/>
+<g fill="#ffe3d7"><circle cx="124" cy="811" r="9"/><circle cx="164" cy="795" r="8"/><circle cx="188" cy="827" r="7"/></g>
+<path d="M678 1004v-69q24-21 49 0v69Z" fill="#dfb88c"/><path d="M652 942q5-59 50-68 47 8 52 68-51 19-102 0Z" fill="#9a6bb1" stroke="#d5a9dc" stroke-width="6"/>
+<g fill="#ffdfef"><circle cx="681" cy="918" r="7"/><circle cx="712" cy="902" r="7"/><circle cx="736" cy="927" r="6"/></g>
+<path d="M1588 989v-62q23-19 48 0v62Z" fill="#e3c48f"/><path d="M1561 931q5-60 51-70 48 10 52 70-51 19-103 0Z" fill="#c66c9a" stroke="#ffd0db" stroke-width="6"/>
+<path d="M1575 1050q71-18 128 0" fill="none" stroke="#9ae9d7" stroke-width="9" opacity=".72"/>
+
+<!-- Small flowers, ferns, and firefly-like light points -->
+<g fill="#dfb8ff"><circle cx="74" cy="1008" r="17"/><circle cx="99" cy="994" r="18"/><circle cx="122" cy="1014" r="16"/><circle cx="98" cy="1031" r="16"/></g><circle cx="99" cy="1012" r="8" fill="#fff0b6"/>
+<g fill="#ffc3cf"><circle cx="488" cy="1038" r="14"/><circle cx="508" cy="1024" r="14"/><circle cx="528" cy="1041" r="14"/></g><circle cx="508" cy="1036" r="6" fill="#fff3b0"/>
+<g fill="#d8d0ff"><circle cx="933" cy="989" r="15"/><circle cx="954" cy="974" r="15"/><circle cx="975" cy="992" r="14"/></g><circle cx="954" cy="986" r="7" fill="#fff2b8"/>
+<g fill="#ffd5a0"><circle cx="1323" cy="994" r="14"/><circle cx="1342" cy="980" r="15"/><circle cx="1364" cy="997" r="13"/></g><circle cx="1343" cy="990" r="6" fill="#fff2b8"/>
+<g fill="#fff2b7">
+  <circle cx="665" cy="437" r="4"/><circle cx="733" cy="523" r="5"/><circle cx="1044" cy="468" r="4"/><circle cx="1258" cy="571" r="5"/><circle cx="907" cy="674" r="4"/><circle cx="534" cy="688" r="5"/><circle cx="1481" cy="730" r="4"/>
+</g>
+<g fill="#c7fff0" opacity=".58"><circle cx="713" cy="452" r="11"/><circle cx="1058" cy="486" r="10"/><circle cx="1273" cy="589" r="10"/><circle cx="548" cy="705" r="10"/></g>
+
+<!-- Warm lantern-like accents in the forest edge -->
+<circle cx="250" cy="786" r="70" fill="url(#warmLantern)"/>
+<circle cx="1510" cy="790" r="58" fill="url(#warmLantern)"/>
 </svg>

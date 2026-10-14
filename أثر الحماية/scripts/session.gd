@@ -17,6 +17,7 @@ const MAX_PLAYERS := 4
 
 var language := "ar"
 var difficulty := "normal"
+var character_index := 0
 var outfit_index := 0
 var player_name := "حارسة"
 var is_networked := false
@@ -44,7 +45,8 @@ func _ready() -> void:
 	if config.load("user://athar_settings.cfg") == OK:
 		language = str(config.get_value("settings", "language", "ar"))
 		difficulty = str(config.get_value("settings", "difficulty", "normal"))
-		outfit_index = clampi(int(config.get_value("settings", "outfit", 0)), 0, 5)
+		character_index = clampi(int(config.get_value("settings", "character", 0)), 0, 1)
+		outfit_index = clampi(int(config.get_value("settings", "outfit_color", config.get_value("settings", "outfit", 0))), 0, 5)
 		player_name = str(config.get_value("settings", "player_name", "حارسة"))
 		music_volume = clampf(float(config.get_value("settings", "music_volume", 0.72)), 0.0, 1.0)
 		sfx_volume = clampf(float(config.get_value("settings", "sfx_volume", 0.82)), 0.0, 1.0)
@@ -64,6 +66,8 @@ func save_profile() -> void:
 	var config := ConfigFile.new()
 	config.set_value("settings", "language", language)
 	config.set_value("settings", "difficulty", difficulty)
+	config.set_value("settings", "character", character_index)
+	config.set_value("settings", "outfit_color", outfit_index)
 	config.set_value("settings", "outfit", outfit_index)
 	config.set_value("settings", "player_name", player_name)
 	config.set_value("settings", "music_volume", music_volume)
@@ -80,10 +84,19 @@ func set_player_name(value: String) -> void:
 	save_profile()
 
 
+func current_avatar_code() -> int:
+	return clampi(character_index, 0, 1) * 6 + clampi(outfit_index, 0, 5)
+
+
+func avatar_for_peer(peer_id: int) -> int:
+	return clampi(int(lobby_outfits.get(peer_id, current_avatar_code())), 0, 11)
+
+
 func settings_snapshot() -> Dictionary:
 	return {
 		"language": language,
 		"difficulty": difficulty,
+		"character_index": character_index,
 		"outfit_index": outfit_index,
 		"player_name": player_name
 	}
@@ -110,7 +123,7 @@ func host_lobby() -> Error:
 	is_host = true
 	game_running = false
 	lobby_names = {1: player_name}
-	lobby_outfits = {1: outfit_index}
+	lobby_outfits = {1: current_avatar_code()}
 	_set_status(_localized("الغرفة جاهزة. أعطِ الأصدقاء عنوان IP والمنفذ %d." % DEFAULT_PORT, "Room ready. Share your IP and port %d with friends." % DEFAULT_PORT))
 	lobby_changed.emit()
 	return OK
@@ -175,7 +188,7 @@ func name_for_peer(peer_id: int) -> String:
 
 
 func outfit_for_peer(peer_id: int) -> int:
-	return clampi(int(lobby_outfits.get(peer_id, 0)), 0, 5)
+	return avatar_for_peer(peer_id)
 
 
 func send_player_state(peer_id: int, position: Vector2, velocity: Vector2, facing: int, color_index: int) -> void:
@@ -251,7 +264,7 @@ func _on_peer_connected(peer_id: int) -> void:
 		multiplayer.multiplayer_peer.disconnect_peer(peer_id)
 		return
 	lobby_names[peer_id] = _localized("جارٍ الانضمام...", "Joining...")
-	lobby_outfits[peer_id] = peer_id % 6
+	lobby_outfits[peer_id] = peer_id % 12
 	_broadcast_lobby()
 
 
@@ -266,7 +279,7 @@ func _on_peer_disconnected(peer_id: int) -> void:
 
 func _on_connected_to_server() -> void:
 	_set_status(_localized("تم الاتصال. بانتظار بدء المضيف.", "Connected. Waiting for the host to start."))
-	_register_player.rpc_id(1, player_name, outfit_index)
+	_register_player.rpc_id(1, player_name, current_avatar_code())
 
 
 func _on_connection_failed() -> void:
@@ -291,14 +304,14 @@ func _broadcast_lobby() -> void:
 
 
 @rpc("any_peer", "call_remote", "reliable")
-func _register_player(display_name: String, color_index: int) -> void:
+func _register_player(display_name: String, avatar_code: int) -> void:
 	if not is_host:
 		return
 	var sender := multiplayer.get_remote_sender_id()
 	if sender <= 1:
 		return
 	lobby_names[sender] = display_name.strip_edges().left(18)
-	lobby_outfits[sender] = clampi(color_index, 0, 5)
+	lobby_outfits[sender] = clampi(avatar_code, 0, 11)
 	_broadcast_lobby()
 
 
@@ -315,6 +328,7 @@ func _start_game_rpc(settings: Dictionary) -> void:
 	lobby_names = game_settings.get("lobby_names", lobby_names)
 	lobby_outfits = game_settings.get("lobby_outfits", lobby_outfits)
 	game_settings["language"] = language
+	game_settings["character_index"] = character_index
 	game_settings["outfit_index"] = outfit_index
 	_reset_world_snapshot()
 	game_running = true
@@ -394,6 +408,7 @@ func local_ip_address() -> String:
 func restore_defaults() -> void:
 	language = "ar"
 	difficulty = "normal"
+	character_index = 0
 	outfit_index = 0
 	player_name = "حارسة"
 	music_volume = 0.72
