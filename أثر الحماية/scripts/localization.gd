@@ -23,10 +23,10 @@ const STRINGS := {
 	"need_seeds": {"ar": "اجمع كل البذور أولًا.", "en": "Gather all three moonseeds first."},
 	"bridge_first": {"ar": "أعد الحياة إلى الجسر أولًا.", "en": "Restore the root bridge first."},
 	"bridge_awake": {"ar": "الجسر عاد للحياة!", "en": "The bridge is alive again!"},
-	"prompt_plant": {"ar": "اقترب واضغط E لإيقاظ البذرة", "en": "Press E to wake the root"},
+	"prompt_plant": {"ar": "اقترب من النبتة بعد جمع البذور لإيقاظ الجسر · أو اضغط E", "en": "Reach the sprout after gathering seeds to wake the bridge · or press E"},
 	"prompt_need": {"ar": "هذه البذرة تحتاج إلى ٣ بذور قمرية", "en": "This sprout needs all 3 moonseeds"},
-	"prompt_gate": {"ar": "اعبر البوابة المضيئة أو اضغط E لإنهاء الفصل", "en": "Walk through the glowing gate or press E to finish the chapter"},
-	"prompt_gate_wait": {"ar": "البوابة تنتظر عودة الجسر", "en": "The gate waits for the root bridge"},
+	"prompt_gate": {"ar": "تابع إلى أقصى اليمين لعبور البوابة وإنهاء الفصل", "en": "Keep going to the far right to pass the gate and finish the chapter"},
+	"prompt_gate_wait": {"ar": "اجمع ٣ بذور وأيقظ الجسر أولًا؛ بعدها أكمل يمينًا للبوابة", "en": "Gather 3 seeds and wake the bridge first, then continue right to the gate"},
 	"controls": {"ar": "A / D أو الأسهم للحركة  ·  Space للقفز ثم اضغط مرة ثانية للدوران  ·  E للتفاعل", "en": "A / D or arrows to move  ·  Space to jump, tap again to spin-jump  ·  E to interact"}
 }
 

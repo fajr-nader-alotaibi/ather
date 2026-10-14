@@ -8,6 +8,7 @@ const WORLD_END := 3600.0
 const SPAWN_POINT := Vector2(160, 572)
 const PLANT_POINT := Vector2(2186, 544)
 const GATE_POINT := Vector2(3370, 558)
+const PLANT_TRIGGER_RADIUS := 180.0
 const GATE_TRIGGER_RADIUS := 145.0
 
 @onready var players_root: Node2D = $Players
@@ -87,13 +88,20 @@ func _process(delta: float) -> void:
 			_death_reset_requested = true
 			GameSession.request_restart()
 		return
-	# The host checks every teammate and announces chapter completion to the party.
-	if plant_restored and not has_won and (not GameSession.is_networked or GameSession.is_host):
-		for peer_id in player_nodes.keys():
-			var candidate := player_nodes[peer_id] as Node2D
-			if is_instance_valid(candidate) and candidate.global_position.distance_to(GATE_POINT) < GATE_TRIGGER_RADIUS:
-				_complete_level()
-				break
+	# Keep the story playable without relying on a missed interaction key.
+	if not GameSession.is_networked or GameSession.is_host:
+		if not plant_restored and seed_count >= 3:
+			for peer_id in player_nodes.keys():
+				var plant_candidate := player_nodes[peer_id] as Node2D
+				if is_instance_valid(plant_candidate) and plant_candidate.global_position.distance_to(PLANT_POINT) < PLANT_TRIGGER_RADIUS:
+					_restore_grove()
+					break
+		if plant_restored and not has_won:
+			for peer_id in player_nodes.keys():
+				var gate_candidate := player_nodes[peer_id] as Node2D
+				if is_instance_valid(gate_candidate) and gate_candidate.global_position.x >= GATE_POINT.x - GATE_TRIGGER_RADIUS and gate_candidate.global_position.y < 900.0:
+					_complete_level()
+					break
 	if not has_won and _hud_refresh_left <= 0.0:
 		_hud_refresh_left = 0.12
 		update_hud()
@@ -260,13 +268,13 @@ func _interact_at_player(peer_id: int) -> void:
 	if get_tree().paused or has_won or not player_nodes.has(peer_id):
 		return
 	var player := player_nodes[peer_id] as Node2D
-	if player.global_position.distance_to(PLANT_POINT) < 130.0 and not plant_restored:
+	if player.global_position.distance_to(PLANT_POINT) < PLANT_TRIGGER_RADIUS and not plant_restored:
 		if seed_count < 3:
 			_goal_hint = TextCatalog.text("need_seeds", str(hud.get("language")))
 		else:
 			_restore_grove()
 		return
-	if player.global_position.distance_to(GATE_POINT) < GATE_TRIGGER_RADIUS:
+	if (player.global_position.x >= GATE_POINT.x - 250.0 and player.global_position.y < 900.0):
 		if plant_restored:
 			_complete_level()
 		else:
