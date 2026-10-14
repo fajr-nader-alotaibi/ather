@@ -8,6 +8,7 @@ const WORLD_END := 3600.0
 const SPAWN_POINT := Vector2(160, 572)
 const PLANT_POINT := Vector2(2186, 544)
 const GATE_POINT := Vector2(3370, 558)
+const GATE_TRIGGER_RADIUS := 145.0
 
 @onready var players_root: Node2D = $Players
 @onready var companion: Node2D = $Companion
@@ -90,7 +91,7 @@ func _process(delta: float) -> void:
 	if plant_restored and not has_won and (not GameSession.is_networked or GameSession.is_host):
 		for peer_id in player_nodes.keys():
 			var candidate := player_nodes[peer_id] as Node2D
-			if is_instance_valid(candidate) and candidate.global_position.distance_to(GATE_POINT) < 72.0:
+			if is_instance_valid(candidate) and candidate.global_position.distance_to(GATE_POINT) < GATE_TRIGGER_RADIUS:
 				_complete_level()
 				break
 	if not has_won and _hud_refresh_left <= 0.0:
@@ -265,7 +266,7 @@ func _interact_at_player(peer_id: int) -> void:
 		else:
 			_restore_grove()
 		return
-	if player.global_position.distance_to(GATE_POINT) < 135.0:
+	if player.global_position.distance_to(GATE_POINT) < GATE_TRIGGER_RADIUS:
 		if plant_restored:
 			_complete_level()
 		else:

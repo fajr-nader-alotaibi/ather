@@ -5,7 +5,7 @@ const STRINGS := {
 	"title": {"ar": "ATHAR  |  أثر", "en": "ATHAR  |  أثر"},
 	"chapter": {"ar": "غابة الأمل  ·  الفصل الأول", "en": "Hope Forest  ·  Chapter I"},
 	"objective": {"ar": "اجمع ٣ بذور قمرية وأيقظ الجسر الجذري.", "en": "Gather 3 moonseeds and wake the root bridge."},
-	"objective_restored": {"ar": "عاد النور! اعبر الجسر واتبع اليراعات.", "en": "The grove is waking. Cross the bridge and follow the fireflies."},
+	"objective_restored": {"ar": "عاد الجسر للحياة! اعبر إلى البوابة المضيئة في أقصى اليمين لإنهاء الفصل.", "en": "The bridge is alive again! Reach the glowing gate at the far right to finish the chapter."},
 	"seeds": {"ar": "بذور القمر", "en": "MOONSEEDS"},
 	"language_button": {"ar": "العربية / EN", "en": "العربية / EN"},
 	"jump": {"ar": "قفز", "en": "Jump"},
@@ -25,7 +25,7 @@ const STRINGS := {
 	"bridge_awake": {"ar": "الجسر عاد للحياة!", "en": "The bridge is alive again!"},
 	"prompt_plant": {"ar": "اقترب واضغط E لإيقاظ البذرة", "en": "Press E to wake the root"},
 	"prompt_need": {"ar": "هذه البذرة تحتاج إلى ٣ بذور قمرية", "en": "This sprout needs all 3 moonseeds"},
-	"prompt_gate": {"ar": "اعبر البوابة لإكمال الفصل  ·  أو اضغط E", "en": "Walk through the gate to finish  ·  or press E"},
+	"prompt_gate": {"ar": "اعبر البوابة المضيئة أو اضغط E لإنهاء الفصل", "en": "Walk through the glowing gate or press E to finish the chapter"},
 	"prompt_gate_wait": {"ar": "البوابة تنتظر عودة الجسر", "en": "The gate waits for the root bridge"},
 	"controls": {"ar": "A / D أو الأسهم للحركة  ·  Space للقفز ثم اضغط مرة ثانية للدوران  ·  E للتفاعل", "en": "A / D or arrows to move  ·  Space to jump, tap again to spin-jump  ·  E to interact"}
 }
