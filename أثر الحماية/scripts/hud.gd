@@ -47,8 +47,6 @@ func set_world_state(seed_count: int, restored: bool, has_won: bool, hint: Strin
 	_has_won = has_won
 	_hint = hint
 	refresh()
-	if has_won and _win_layer != null:
-		_show_win()
 
 
 func _build_panels() -> void:
@@ -65,7 +63,11 @@ func _build_panels() -> void:
 	_objective.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	content.add_child(_objective)
 
-	var seed_panel := _panel(Vector2(800, 24), Vector2(282, 90))
+	var seed_panel := _panel(Vector2(0, 24), Vector2(282, 90))
+	seed_panel.anchor_left = 1.0
+	seed_panel.anchor_right = 1.0
+	seed_panel.offset_left = -308.0
+	seed_panel.offset_right = -26.0
 	var seed_box := VBoxContainer.new()
 	seed_box.add_theme_constant_override("separation", 4)
 	seed_panel.add_child(seed_box)
@@ -74,18 +76,42 @@ func _build_panels() -> void:
 	_seed_counter = _label("", 26, GOLD)
 	_seed_counter.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	seed_box.add_child(_seed_counter)
-	var party_panel := _panel(Vector2(510, 24), Vector2(260, 70))
+	var party_panel := _panel(Vector2(0, 24), Vector2(260, 70))
+	party_panel.anchor_left = 0.5
+	party_panel.anchor_right = 0.5
+	party_panel.offset_left = -130.0
+	party_panel.offset_right = 130.0
 	_party_label = _label("", 15, MINT)
 	_party_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_party_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	party_panel.add_child(_party_label)
-	_language_button = _button(_text("language_button"), Vector2(1090, 28), Vector2(92, 58), false)
+	_language_button = _button(_text("language_button"), Vector2.ZERO, Vector2(92, 58), false)
+	_language_button.anchor_left = 1.0
+	_language_button.anchor_right = 1.0
+	_language_button.offset_left = -190.0
+	_language_button.offset_right = -98.0
+	_language_button.offset_top = 28.0
+	_language_button.offset_bottom = 86.0
 	_language_button.add_theme_font_size_override("font_size", 15)
 	_language_button.pressed.connect(_toggle_language)
-	var pause_button := _button("Ⅱ", Vector2(1192, 28), Vector2(62, 58), true)
+	var pause_button := _button("Ⅱ", Vector2.ZERO, Vector2(62, 58), true)
+	pause_button.anchor_left = 1.0
+	pause_button.anchor_right = 1.0
+	pause_button.offset_left = -78.0
+	pause_button.offset_right = -16.0
+	pause_button.offset_top = 28.0
+	pause_button.offset_bottom = 86.0
 	pause_button.pressed.connect(_on_pause_pressed)
 
-	var hint_panel := _panel(Vector2(250, 635), Vector2(780, 56), true)
+	var hint_panel := _panel(Vector2.ZERO, Vector2(780, 56), true)
+	hint_panel.anchor_left = 0.5
+	hint_panel.anchor_right = 0.5
+	hint_panel.anchor_top = 1.0
+	hint_panel.anchor_bottom = 1.0
+	hint_panel.offset_left = -390.0
+	hint_panel.offset_right = 390.0
+	hint_panel.offset_top = -85.0
+	hint_panel.offset_bottom = -29.0
 	if DisplayServer.is_touchscreen_available():
 		hint_panel.position.y = 548.0
 	_hint_label = _label("", 17, CREAM)
@@ -215,7 +241,14 @@ func _overlay() -> ColorRect:
 func _center_panel(parent: Control, size: Vector2) -> PanelContainer:
 	var panel := PanelContainer.new()
 	panel.size = size
-	panel.position = (Vector2(1280, 720) - size) * 0.5
+	panel.anchor_left = 0.5
+	panel.anchor_right = 0.5
+	panel.anchor_top = 0.5
+	panel.anchor_bottom = 0.5
+	panel.offset_left = -size.x * 0.5
+	panel.offset_right = size.x * 0.5
+	panel.offset_top = -size.y * 0.5
+	panel.offset_bottom = size.y * 0.5
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(0.102, 0.208, 0.243, 0.98)
 	style.border_color = Color("96c6a6")

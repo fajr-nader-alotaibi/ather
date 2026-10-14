@@ -26,6 +26,13 @@ var lobby_names: Dictionary = {}
 var lobby_outfits: Dictionary = {}
 var game_settings: Dictionary = {}
 var status_message := ""
+var music_volume := 0.72
+var sfx_volume := 0.82
+var ui_volume := 0.72
+var muted := false
+var graphics_quality := "balanced"
+var run_result: Dictionary = {}
+
 var _world_seed_count := 0
 var _world_restored := false
 var _world_won := false
@@ -39,6 +46,13 @@ func _ready() -> void:
 		difficulty = str(config.get_value("settings", "difficulty", "normal"))
 		outfit_index = clampi(int(config.get_value("settings", "outfit", 0)), 0, 5)
 		player_name = str(config.get_value("settings", "player_name", "حارسة"))
+		music_volume = clampf(float(config.get_value("settings", "music_volume", 0.72)), 0.0, 1.0)
+		sfx_volume = clampf(float(config.get_value("settings", "sfx_volume", 0.82)), 0.0, 1.0)
+		ui_volume = clampf(float(config.get_value("settings", "ui_volume", 0.72)), 0.0, 1.0)
+		muted = bool(config.get_value("settings", "muted", false))
+		graphics_quality = str(config.get_value("settings", "graphics_quality", "balanced"))
+	_ensure_audio_buses()
+	apply_audio_settings()
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
@@ -52,6 +66,11 @@ func save_profile() -> void:
 	config.set_value("settings", "difficulty", difficulty)
 	config.set_value("settings", "outfit", outfit_index)
 	config.set_value("settings", "player_name", player_name)
+	config.set_value("settings", "music_volume", music_volume)
+	config.set_value("settings", "sfx_volume", sfx_volume)
+	config.set_value("settings", "ui_volume", ui_volume)
+	config.set_value("settings", "muted", muted)
+	config.set_value("settings", "graphics_quality", graphics_quality)
 	config.save("user://athar_settings.cfg")
 
 
@@ -73,9 +92,9 @@ func settings_snapshot() -> Dictionary:
 func start_solo() -> void:
 	leave_lobby()
 	_reset_world_snapshot()
+	run_result.clear()
 	game_settings = settings_snapshot()
-	game_running = false
-	_reset_world_snapshot()
+	game_running = true
 	game_started.emit(game_settings)
 
 
@@ -355,3 +374,75 @@ func _request_restart() -> void:
 func _restart_game() -> void:
 	_reset_world_snapshot()
 	restart_requested.emit()
+
+func change_scene(path: String) -> void:
+	if not ResourceLoader.exists(path):
+		_set_status(_localized("المشهد غير موجود: %s" % path, "Scene not found: %s" % path))
+		push_error(status_message)
+		return
+	get_tree().paused = false
+	get_tree().change_scene_to_file(path)
+
+
+func local_ip_address() -> String:
+	for address in IP.get_local_addresses():
+		if address.contains(".") and not address.begins_with("127.") and not address.begins_with("169.254."):
+			return address
+	return "127.0.0.1"
+
+
+func restore_defaults() -> void:
+	language = "ar"
+	difficulty = "normal"
+	outfit_index = 0
+	player_name = "حارسة"
+	music_volume = 0.72
+	sfx_volume = 0.82
+	ui_volume = 0.72
+	muted = false
+	graphics_quality = "balanced"
+	apply_audio_settings()
+	save_profile()
+
+
+func apply_audio_settings() -> void:
+	_ensure_audio_buses()
+	AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"), muted)
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear_to_db(maxf(music_volume, 0.001)))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), linear_to_db(maxf(sfx_volume, 0.001)))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("UI"), linear_to_db(maxf(ui_volume, 0.001)))
+	Engine.max_fps = 45 if graphics_quality == "low" else (60 if graphics_quality == "balanced" else 0)
+
+
+func play_ui_click() -> void:
+	if muted or ui_volume <= 0.01:
+		return
+	var samples := PackedByteArray()
+	var sample_rate := 22050
+	var sample_count := 990
+	for index in range(sample_count):
+		var fade := 1.0 - float(index) / float(sample_count)
+		var sample := int(sin(TAU * 880.0 * float(index) / float(sample_rate)) * 3200.0 * fade)
+		samples.append(sample & 0xff)
+		samples.append((sample >> 8) & 0xff)
+	var sound := AudioStreamWAV.new()
+	sound.format = AudioStreamWAV.FORMAT_16_BITS
+	sound.mix_rate = sample_rate
+	sound.stereo = false
+	sound.data = samples
+	var player := AudioStreamPlayer.new()
+	player.bus = "UI"
+	player.stream = sound
+	add_child(player)
+	player.finished.connect(player.queue_free)
+	player.play()
+
+
+func _ensure_audio_buses() -> void:
+	for bus_name in ["Music", "SFX", "UI"]:
+		if AudioServer.get_bus_index(bus_name) >= 0:
+			continue
+		var index := AudioServer.bus_count
+		AudioServer.add_bus(index)
+		AudioServer.set_bus_name(index, bus_name)
+		AudioServer.set_bus_send(index, "Master")

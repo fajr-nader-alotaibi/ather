@@ -31,7 +31,9 @@ var _goal_hint := ""
 var _seed_pickups: Dictionary = {}
 var _collected_seed_ids: Array[int] = []
 var _sparkle_bursts: Array[Dictionary] = []
-var _death_reset_requested := false
+var _completion_transitioned := false
+var _checkpoint := SPAWN_POINT
+var _interaction_lock := 0.0
 
 
 func _ready() -> void:
@@ -76,6 +78,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	_float_clock += delta
+	_interaction_lock = maxf(0.0, _interaction_lock - delta)
 	_hud_refresh_left -= delta
 	for index in range(_sparkle_bursts.size() - 1, -1, -1):
 		_sparkle_bursts[index]["time"] = float(_sparkle_bursts[index]["time"]) + delta
@@ -83,11 +86,10 @@ func _process(delta: float) -> void:
 			_sparkle_bursts.remove_at(index)
 	if player_nodes.size() > 0:
 		_update_team_camera(delta)
-	if local_player.global_position.y > 900.0:
-		if not _death_reset_requested:
-			_death_reset_requested = true
-			GameSession.request_restart()
-		return
+	for peer_variant in player_nodes.keys():
+		var fallen_player := player_nodes[peer_variant] as CharacterBody2D
+		if is_instance_valid(fallen_player) and fallen_player.global_position.y > 900.0:
+			_respawn_player(fallen_player)
 	# Keep the story playable without relying on a missed interaction key.
 	if not GameSession.is_networked or GameSession.is_host:
 		if not plant_restored and seed_count >= 3:
@@ -99,7 +101,7 @@ func _process(delta: float) -> void:
 		if plant_restored and not has_won:
 			for peer_id in player_nodes.keys():
 				var gate_candidate := player_nodes[peer_id] as Node2D
-				if is_instance_valid(gate_candidate) and gate_candidate.global_position.x >= GATE_POINT.x - GATE_TRIGGER_RADIUS and gate_candidate.global_position.y < 900.0:
+				if is_instance_valid(gate_candidate) and gate_candidate.global_position.x >= GATE_POINT.x + 32.0 and gate_candidate.global_position.y < 900.0:
 					_complete_level()
 					break
 	if not has_won and _hud_refresh_left <= 0.0:
@@ -113,6 +115,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause") and not event.is_echo():
 		hud.call("_on_pause_pressed")
 		get_viewport().set_input_as_handled()
+		return
+	if event is InputEventKey and event.pressed and not event.echo:
+		var key := event.physical_keycode if event.physical_keycode != 0 else event.keycode
+		if key in [KEY_E, KEY_F, KEY_ENTER, KEY_KP_ENTER]:
+			_on_local_interact(multiplayer.get_unique_id() if GameSession.is_networked else 1)
+			get_viewport().set_input_as_handled()
 
 
 func _spawn_players() -> void:
@@ -265,20 +273,26 @@ func _on_network_interact(peer_id: int) -> void:
 
 
 func _interact_at_player(peer_id: int) -> void:
-	if get_tree().paused or has_won or not player_nodes.has(peer_id):
+	if get_tree().paused or has_won or not player_nodes.has(peer_id) or _interaction_lock > 0.0:
 		return
+	_interaction_lock = 0.18
 	var player := player_nodes[peer_id] as Node2D
 	if player.global_position.distance_to(PLANT_POINT) < PLANT_TRIGGER_RADIUS and not plant_restored:
 		if seed_count < 3:
 			_goal_hint = TextCatalog.text("need_seeds", str(hud.get("language")))
 		else:
 			_restore_grove()
+		update_hud()
 		return
-	if (player.global_position.x >= GATE_POINT.x - 250.0 and player.global_position.y < 900.0):
+	if player.global_position.distance_to(GATE_POINT) < 210.0:
 		if plant_restored:
 			_complete_level()
 		else:
 			_goal_hint = TextCatalog.text("bridge_first", str(hud.get("language")))
+		update_hud()
+		return
+	_goal_hint = TextCatalog.text("prompt_approach", str(hud.get("language")))
+	update_hud()
 
 
 func _complete_level() -> void:
@@ -287,17 +301,32 @@ func _complete_level() -> void:
 	has_won = true
 	_gate_light.color = Color("fff0c0")
 	_gate_light.energy = 1.35
+	GameSession.run_result = {
+		"stage": "hope_forest",
+		"seeds_collected": _collected_seed_ids.size(),
+		"animals_rescued": 0,
+		"puzzles_solved": 0
+	}
 	var progress := ConfigFile.new()
 	progress.set_value("progress", "hope_forest_complete", true)
 	progress.save("user://athar_save.cfg")
 	update_hud()
 	_publish_world_state()
+	call_deferred("_show_level_complete")
+
+
+func _show_level_complete() -> void:
+	if _completion_transitioned:
+		return
+	_completion_transitioned = true
+	GameSession.change_scene("res://scenes/level_complete.tscn")
 
 
 func _restore_grove() -> void:
 	if plant_restored:
 		return
 	plant_restored = true
+	_checkpoint = Vector2(2260.0, 572.0)
 	_grove_light.color = Color("d1f49b")
 	var light_tween := create_tween()
 	light_tween.tween_property(_grove_light, "energy", 1.25, 0.9)
@@ -335,6 +364,7 @@ func _on_network_world_state(count: int, restored: bool, won: bool, collected: A
 	plant_restored = restored
 	has_won = won
 	if plant_restored and not was_restored:
+		_checkpoint = Vector2(2260.0, 572.0)
 		_grove_light.color = Color("d1f49b")
 		_grove_light.energy = 1.25
 		_gate_light.color = Color("ffe0a3")
@@ -347,8 +377,16 @@ func _on_network_world_state(count: int, restored: bool, won: bool, collected: A
 		backdrop.modulate = Color(1.08, 1.08, 1.04, 1.0)
 	if won:
 		has_won = true
+		if GameSession.run_result.is_empty():
+			GameSession.run_result = {
+				"stage": "hope_forest",
+				"seeds_collected": _collected_seed_ids.size(),
+				"animals_rescued": 0,
+				"puzzles_solved": 0
+			}
 		_gate_light.color = Color("fff0c0")
 		_gate_light.energy = 1.35
+		call_deferred("_show_level_complete")
 	update_hud()
 
 
@@ -366,7 +404,16 @@ func _on_restart_button() -> void:
 
 func _restart_level() -> void:
 	get_tree().paused = false
+	_completion_transitioned = false
 	get_tree().reload_current_scene()
+
+
+func _respawn_player(player: CharacterBody2D) -> void:
+	player.global_position = _checkpoint
+	player.velocity = Vector2.ZERO
+	if player.get_multiplayer_authority() == (multiplayer.get_unique_id() if GameSession.is_networked else 1):
+		GameSession.send_player_state(player.get_multiplayer_authority(), player.global_position, Vector2.ZERO, 1, GameSession.outfit_index)
+
 
 
 func _return_to_menu() -> void:
@@ -379,7 +426,7 @@ func _setup_input_map() -> void:
 	_bind_keys("move_left", [KEY_A, KEY_LEFT])
 	_bind_keys("move_right", [KEY_D, KEY_RIGHT])
 	_bind_keys("jump", [KEY_SPACE, KEY_W, KEY_UP])
-	_bind_keys("interact", [KEY_E])
+	_bind_keys("interact", [KEY_E, KEY_F, KEY_ENTER, KEY_KP_ENTER])
 	_bind_keys("pause", [KEY_ESCAPE])
 
 
