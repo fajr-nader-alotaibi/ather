@@ -25,7 +25,7 @@ const STRINGS := {
 	"bridge_awake": {"ar": "الجسر عاد للحياة!", "en": "The bridge is alive again!"},
 	"prompt_plant": {"ar": "اقترب واضغط E لإيقاظ البذرة", "en": "Press E to wake the root"},
 	"prompt_need": {"ar": "هذه البذرة تحتاج إلى ٣ بذور قمرية", "en": "This sprout needs all 3 moonseeds"},
-	"prompt_gate": {"ar": "اضغط E لعبور البوابة", "en": "Press E to pass the lantern gate"},
+	"prompt_gate": {"ar": "اعبر البوابة لإكمال الفصل  ·  أو اضغط E", "en": "Walk through the gate to finish  ·  or press E"},
 	"prompt_gate_wait": {"ar": "البوابة تنتظر عودة الجسر", "en": "The gate waits for the root bridge"},
 	"controls": {"ar": "A / D أو الأسهم للحركة  ·  Space للقفز ثم اضغط مرة ثانية للدوران  ·  E للتفاعل", "en": "A / D or arrows to move  ·  Space to jump, tap again to spin-jump  ·  E to interact"}
 }

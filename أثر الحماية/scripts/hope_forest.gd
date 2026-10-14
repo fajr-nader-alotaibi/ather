@@ -29,6 +29,7 @@ var _goal_hint := ""
 var _seed_pickups: Dictionary = {}
 var _collected_seed_ids: Array[int] = []
 var _sparkle_bursts: Array[Dictionary] = []
+var _death_reset_requested := false
 
 
 func _ready() -> void:
@@ -81,7 +82,17 @@ func _process(delta: float) -> void:
 	if player_nodes.size() > 0:
 		_update_team_camera(delta)
 	if local_player.global_position.y > 900.0:
-		local_player.call("reset_to_spawn", SPAWN_POINT)
+		if not _death_reset_requested:
+			_death_reset_requested = true
+			GameSession.request_restart()
+		return
+	# The host checks every teammate and announces chapter completion to the party.
+	if plant_restored and not has_won and (not GameSession.is_networked or GameSession.is_host):
+		for peer_id in player_nodes.keys():
+			var candidate := player_nodes[peer_id] as Node2D
+			if is_instance_valid(candidate) and candidate.global_position.distance_to(GATE_POINT) < 72.0:
+				_complete_level()
+				break
 	if not has_won and _hud_refresh_left <= 0.0:
 		_hud_refresh_left = 0.12
 		update_hud()
@@ -256,16 +267,22 @@ func _interact_at_player(peer_id: int) -> void:
 		return
 	if player.global_position.distance_to(GATE_POINT) < 135.0:
 		if plant_restored:
-			has_won = true
-			_gate_light.color = Color("fff0c0")
-			_gate_light.energy = 1.35
-			var progress := ConfigFile.new()
-			progress.set_value("progress", "hope_forest_complete", true)
-			progress.save("user://athar_save.cfg")
-			update_hud()
-			_publish_world_state()
+			_complete_level()
 		else:
 			_goal_hint = TextCatalog.text("bridge_first", str(hud.get("language")))
+
+
+func _complete_level() -> void:
+	if has_won:
+		return
+	has_won = true
+	_gate_light.color = Color("fff0c0")
+	_gate_light.energy = 1.35
+	var progress := ConfigFile.new()
+	progress.set_value("progress", "hope_forest_complete", true)
+	progress.save("user://athar_save.cfg")
+	update_hud()
+	_publish_world_state()
 
 
 func _restore_grove() -> void:
